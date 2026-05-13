@@ -44,6 +44,9 @@ class CLIPEncoder:
             ).to(self.device)
 
             emb = self.model.get_image_features(**inputs)
+            # Handle BaseModelOutputWithPooling in newer transformers
+            if hasattr(emb, "pooler_output"):
+                emb = emb.pooler_output
             if self.normalize:
                 emb = F.normalize(emb, p=2, dim=-1)
 
@@ -65,6 +68,8 @@ class CLIPEncoder:
             ).to(self.device)
 
             emb = self.model.get_text_features(**inputs)
+            if hasattr(emb, "pooler_output"):
+                emb = emb.pooler_output
             if self.normalize:
                 emb = F.normalize(emb, p=2, dim=-1)
 

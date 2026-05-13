@@ -32,11 +32,12 @@ class ManualHNSW(BaseIndex):
     """Manual HNSW implementation for educational and comparison purposes."""
 
     def __init__(self, dim: int, M: int = 16, ef_construction: int = 200,
-                 ml: float = 0.5, metric: str = "cosine"):
+                 ef_search: int = 50, ml: float = 0.5, metric: str = "cosine"):
         super().__init__(dim, metric)
         self.M_max = M
         self.M_max0 = M * 2  # more connections at bottom layer
         self.ef_construction = ef_construction
+        self.ef_search = ef_search
         self.ml = ml  # level generation factor: 1/ln(2) for skip-list-like
         self.nodes = {}  # id -> HNSWNode
         self.entry_point = None
@@ -56,12 +57,16 @@ class ManualHNSW(BaseIndex):
         return int(r)
 
     def _select_neighbors(self, query: np.ndarray, candidates: list[tuple[float, int]],
-                          M: int) -> list[tuple[float, int]]:
-        """Heuristic neighbor selection: prefer diverse neighbors."""
+                          M: int, use_heuristic: bool = True) -> list[tuple[float, int]]:
+        """Select M nearest neighbors, with optional diversity heuristic."""
         candidates = sorted(candidates)
-        selected = []
 
-        for dist, node_id in candidates:
+        if not use_heuristic or len(candidates) <= M:
+            return candidates[:M]
+
+        selected = [candidates[0]]  # Always accept the closest
+
+        for dist, node_id in candidates[1:]:
             if len(selected) >= M:
                 break
             # Heuristic: accept if closer to query than to any selected neighbor
@@ -74,7 +79,15 @@ class ManualHNSW(BaseIndex):
             if accept:
                 selected.append((dist, node_id))
 
-        return selected
+        # If heuristic didn't fill M, pad with closest remaining
+        if len(selected) < M:
+            for dist, node_id in candidates:
+                if (dist, node_id) not in selected:
+                    selected.append((dist, node_id))
+                    if len(selected) >= M:
+                        break
+
+        return selected[:M]
 
     def _search_layer(self, query: np.ndarray, entry_id: int,
                       level: int, ef: int) -> list[tuple[float, int]]:
@@ -106,8 +119,8 @@ class ManualHNSW(BaseIndex):
                     heapq.heappush(candidates, (-dist, neighbor_id))
                     heapq.heappush(results, (dist, neighbor_id))
                     if len(results) > ef:
-                        # Remove farthest
                         results = sorted(results)[:ef]
+                        heapq.heapify(results)
 
         return sorted(results)[:ef]
 
@@ -136,15 +149,16 @@ class ManualHNSW(BaseIndex):
 
         # Start from entry point at top level
         current_ep = self.entry_point
-        current_level = self.nodes[self.entry_point].level
+        top_level = self.nodes[self.entry_point].level
 
-        # Navigate down from top level to node's level
-        for l in range(current_level, level + 1, -1):
+        # Navigate down from top level to just above new node's level
+        for l in range(top_level, level, -1):
             results = self._search_layer(vector, current_ep, l, 1)
             current_ep = results[0][1]
 
-        # Insert into layers from node's level down to 0
-        for l in range(level, -1, -1):
+        # Insert from min(level, top_level) down to 0
+        start_level = min(level, top_level)
+        for l in range(start_level, -1, -1):
             results = self._search_layer(vector, current_ep, l, self.ef_construction)
             M = self.M_max if l > 0 else self.M_max0
             neighbors = self._select_neighbors(vector, results, M)
@@ -163,7 +177,7 @@ class ManualHNSW(BaseIndex):
                 if len(nb.neighbors[l]) > M:
                     nb_vec = nb.vector
                     all_nb = [(self._distance(nb_vec, self.nodes[nid].vector), nid)
-                              for nid in nb.neighbors[l]]
+                              for nid in nb.neighbors[l] if nid != node_id]
                     nb.neighbors[l] = [nid for _, nid in
                                        self._select_neighbors(nb_vec, all_nb, M)]
 
@@ -190,7 +204,7 @@ class ManualHNSW(BaseIndex):
                 current_ep = results[0][1]
 
             # Search bottom layer with ef = k
-            results = self._search_layer(q, current_ep, 0, max(k, 10))
+            results = self._search_layer(q, current_ep, 0, self.ef_search)
             ids = [node_id for _, node_id in results[:k]]
             dists = [dist for dist, _ in results[:k]]
 
@@ -207,6 +221,7 @@ class ManualHNSW(BaseIndex):
             pickle.dump({
                 "dim": self.dim, "M_max": self.M_max,
                 "M_max0": self.M_max0, "ef_construction": self.ef_construction,
+                "ef_search": self.ef_search,
                 "ml": self.ml, "metric": self.metric,
                 "nodes": self.nodes, "entry_point": self.entry_point,
                 "n_vectors": self._n_vectors,
@@ -223,6 +238,7 @@ class ManualHNSW(BaseIndex):
         obj.M_max = data["M_max"]
         obj.M_max0 = data["M_max0"]
         obj.ef_construction = data["ef_construction"]
+        obj.ef_search = data.get("ef_search", 50)
         obj.ml = data["ml"]
         obj.metric = data["metric"]
         obj.nodes = data["nodes"]
