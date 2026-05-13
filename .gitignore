@@ -1,0 +1,53 @@
+# Data files (too large for git)
+data/raw/
+data/processed/
+data/embeddings/
+data/indexes/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+*.egg
+.venv/
+venv/
+dist/
+build/
+
+# Model files (too large)
+models/
+*.bin
+*.safetensors
+*.pt
+*.pth
+*.ckpt
+*.index
+
+# Environment
+.env
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# Spark
+metastore_db/
+spark-warehouse/
+derby.log
+
+# Report
+report/*.doc
+report/*.docx
+
+# Credentials
+*.key
+*.pem
+secrets/

@@ -1,0 +1,109 @@
+# Cross-Modal RAG System — Default Configuration
+
+# Paths
+paths:
+  data_dir: "data"
+  raw_dir: "data/raw"
+  processed_dir: "data/processed"
+  embeddings_dir: "data/embeddings"
+  indexes_dir: "data/indexes"
+  model_cache_dir: "models"
+
+# Dataset
+dataset:
+  name: "flickr30k"           # flickr30k | coco2017
+  image_size: 224
+  max_caption_length: 77
+  val_split_ratio: 0.2
+  test_split_ratio: 0.1
+
+# CLIP Embedding
+embedding:
+  model_name: "openai/clip-vit-base-patch32"
+  dim: 512
+  batch_size: 64
+  normalize: true
+  device: "cuda"
+
+# Dimensionality Reduction
+dim_reduction:
+  enabled: false
+  method: "pca"               # pca | umap | tsne
+  target_dims: [64, 128, 256]
+
+# Indexing
+indexing:
+  # FAISS IVF-PQ
+  faiss:
+    nlist: 100
+    m: 8                     # sub-quantizers (dim must be divisible by m)
+    nbits: 8
+
+  # HNSW (Manual)
+  hnsw:
+    M: 16                    # max connections per layer
+    ef_construction: 200
+    ef_search: 50
+    ml: 0.5                  # level generation factor
+
+  # LSH
+  lsh:
+    n_tables: 10
+    n_hashes: 16
+    method: "cosine"         # cosine | euclidean
+
+  # Annoy
+  annoy:
+    n_trees: 10
+    metric: "angular"        # angular | euclidean | manhattan
+
+# Hybrid Retrieval
+retrieval:
+  # Query Router weights (default, overridden by adaptive routing)
+  default_weights:
+    dense: 0.6
+    sparse: 0.25
+    metadata: 0.15
+
+  # BM25
+  bm25:
+    k1: 1.5
+    b: 0.75
+
+  # Reciprocal Rank Fusion
+  rrf:
+    k: 60                    # RRF constant
+
+  # Multi-stage
+  multi_stage:
+    stage1_k: 500            # coarse ANN candidates
+    stage2_k: 200            # after RRF fusion
+    stage3_k: 50             # after CLIP re-rank
+    final_k: 10              # returned to user
+
+# LLM (RAG Generation)
+llm:
+  model_name: "Qwen/Qwen2.5-7B-Instruct-GPTQ-Int4"
+  max_new_tokens: 256
+  temperature: 0.7
+  device_map: "auto"
+  torch_dtype: "float16"
+
+# Spark
+spark:
+  app_name: "CrossModalRAG"
+  master: "local[4]"
+  driver_memory: "4g"
+  executor_memory: "2g"
+
+# Evaluation
+evaluation:
+  k_values: [1, 5, 10, 50]
+  num_test_queries: 1000
+  dataset_scales: [1000, 5000, 10000, 50000, 100000]
+
+# Web UI
+ui:
+  host: "127.0.0.1"
+  port: 7860
+  share: false

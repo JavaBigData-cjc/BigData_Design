@@ -1,0 +1,53 @@
+# Model paths and hyperparameters
+# Override settings from default.yaml
+
+# CLIP variants (uncomment to switch)
+clip:
+  # vit-base (512d, lightweight, English)
+  base:
+    name: "openai/clip-vit-base-patch32"
+    dim: 512
+
+  # vit-large (768d, better quality)
+  large:
+    name: "openai/clip-vit-large-patch14"
+    dim: 768
+
+  # Chinese-CLIP (for Chinese text support)
+  chinese:
+    name: "OFA-Sys/chinese-clip-vit-base-patch16"
+    dim: 768
+
+# LLM variants
+llm:
+  # 7B model at 4-bit (~5GB VRAM)
+  qwen_7b:
+    name: "Qwen/Qwen2.5-7B-Instruct-GPTQ-Int4"
+    max_context: 8192
+
+  # 3B model at 4-bit (~2.5GB VRAM, lighter fallback)
+  qwen_3b:
+    name: "Qwen/Qwen2.5-3B-Instruct-GPTQ-Int4"
+    max_context: 4096
+
+# ANN algorithm parameters for experiments
+ann_experiments:
+  faiss_ivfpq:
+    - {nlist: 50, m: 8, nbits: 8}
+    - {nlist: 100, m: 8, nbits: 8}
+    - {nlist: 500, m: 16, nbits: 8}
+
+  hnsw:
+    - {M: 8, ef_construction: 100, ef_search: 30}
+    - {M: 16, ef_construction: 200, ef_search: 50}
+    - {M: 32, ef_construction: 400, ef_search: 100}
+
+  lsh:
+    - {n_tables: 5, n_hashes: 8}
+    - {n_tables: 10, n_hashes: 16}
+    - {n_tables: 20, n_hashes: 32}
+
+  annoy:
+    - {n_trees: 5}
+    - {n_trees: 10}
+    - {n_trees: 50}

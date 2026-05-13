@@ -1,0 +1,52 @@
+# Experiment configurations for reproducible benchmarks
+
+# Experiment 1: ANN Algorithm Comparison
+experiment_1_ann_comparison:
+  description: "Compare 4 ANN algorithms + brute-force on recall and latency"
+  dataset: "flickr30k"
+  scale: 10000
+  queries: 1000
+  metrics: ["recall@k", "precision@k", "map", "latency_p50", "latency_p95", "build_time", "memory_mb"]
+  algorithms: ["brute_force", "faiss_ivfpq", "hnsw_manual", "hnsw_lib", "lsh", "annoy"]
+  runs: 3
+
+# Experiment 2: Dimensionality Reduction Impact
+experiment_2_dim_reduction:
+  description: "Effect of PCA/UMAP on recall and speed"
+  method: "faiss_ivfpq"     # best algorithm from E1
+  dims: [64, 128, 256, 512]
+  reduction_methods: ["pca", "umap"]
+  metrics: ["recall@10", "index_size_mb", "latency_p50"]
+
+# Experiment 3: Hybrid Retrieval Ablation
+experiment_3_hybrid_ablation:
+  description: "Compare pure dense/sparse vs hybrid strategies"
+  strategies:
+    - pure_dense
+    - pure_sparse
+    - dense_sparse_fixed          # fixed 0.7/0.3
+    - dense_sparse_metadata_fixed  # fixed 0.6/0.25/0.15
+    - adaptive_weighted            # query-router based
+    - multi_stage                  # coarse-to-fine
+  metrics: ["recall@k", "map", "mrr", "latency_p50", "latency_p95"]
+
+# Experiment 4: Cross-Modal Symmetry
+experiment_4_cross_modal_symmetry:
+  description: "Text-to-Image vs Image-to-Text recall comparison"
+  directions: ["t2i", "i2t"]
+  num_queries: 500
+  metrics: ["recall@k", "mrr"]
+
+# Experiment 5: RAG Quality Assessment
+experiment_5_rag_quality:
+  description: "Manual evaluation of RAG generation quality"
+  num_samples: 20
+  rating_dimensions: ["relevance", "factual_accuracy", "helpfulness"]
+  scale: [1, 2, 3]
+
+# Experiment 6: Scale Analysis
+experiment_6_scale:
+  description: "Query latency and recall vs database size"
+  scales: [1000, 5000, 10000, 50000, 100000]
+  algorithm: "hnsw_lib"
+  metrics: ["recall@10", "latency_p50", "latency_p95", "memory_mb"]
