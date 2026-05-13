@@ -22,14 +22,79 @@ PROJECT_ROOT = Path(__file__).parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
 
 
-def stage1_generate_data():
-    """Generate synthetic demo data for development."""
+def load_flickr30k_data(data_dir: str = "data/raw/flickr30k"):
+    """Load real Flickr30k dataset (images + captions)."""
+    import pandas as pd
+    import numpy as np
+
+    data_dir = Path(data_dir)
+    csv_path = data_dir / "captions.csv"
+
+    if not csv_path.exists():
+        print(f"  [WARN] Flickr30k captions not found at {csv_path}")
+        print(f"  Run: python scripts/download_flickr30k.py")
+        return None
+
+    df = pd.read_csv(csv_path)
+    print(f"  Loaded {len(df)} captions from {csv_path}")
+
+    # Build image path column
+    img_dir = data_dir / "images"
+    if img_dir.exists():
+        # Map image filenames to full paths
+        img_files = {f.stem: str(f) for f in img_dir.glob("*.jpg")}
+        if "image_id" in df.columns:
+            # Try to match by numeric id or filename
+            df["image_path"] = df["image_id"].apply(
+                lambda x: img_files.get(str(x), "")
+            )
+        elif "image_name" in df.columns:
+            df["image_path"] = df["image_name"].apply(
+                lambda x: str(img_dir / x) if x else ""
+            )
+        # Filter out rows without actual image files
+        valid = df["image_path"].apply(lambda p: Path(p).exists() if p else False)
+        print(f"  Matched images: {valid.sum()}/{len(df)}")
+        df = df[valid]
+
+    # Sample subset for development
+    if len(df) > 5000:
+        print(f"  [dev mode] Sampling 5000 from {len(df)} for faster iteration")
+        df = df.sample(n=5000, random_state=42).reset_index(drop=True)
+
+    # Ensure standard column names
+    if "caption" not in df.columns:
+        # Try common alternative names
+        for col in ["comment", "description", "text", "sentence"]:
+            if col in df.columns:
+                df["caption"] = df[col]
+                break
+
+    return df
+
+
+def stage1_load_data(source: str = "demo"):
+    """Load or generate data for the pipeline."""
     print("=" * 60)
-    print("STAGE 1: Generate Demo Data")
+    print(f"STAGE 1: Load Data (source={source})")
     print("=" * 60)
-    from scripts.generate_demo_data import generate_demo_dataset
-    df = generate_demo_dataset("data/demo", num_images_per_scene=10)
-    print(f"  [OK] {len(df)} image-text pairs generated\n")
+
+    if source == "flickr30k":
+        df = load_flickr30k_data("data/raw/flickr30k")
+        if df is None:
+            print("  [FALLBACK] Using demo data instead")
+            source = "demo"
+
+    if source == "demo":
+        from scripts.generate_demo_data import generate_demo_dataset
+        df = generate_demo_dataset("data/demo", num_images_per_scene=10)
+
+    if df is None or len(df) == 0:
+        raise RuntimeError("Failed to load any data")
+
+    print(f"  [OK] {len(df)} samples loaded")
+    print(f"  Columns: {list(df.columns)}")
+    print()
     return df
 
 
@@ -236,7 +301,10 @@ if __name__ == "__main__":
     import argparse
     ap = argparse.ArgumentParser(description="Cross-Modal RAG Data Pipeline")
     ap.add_argument("--stage", type=int, default=0,
-                    help="Run specific stage (0=all, 1=generate, 2=spark, 3=embed, 4=index)")
+                    help="Run specific stage (0=all, 1=load, 2=spark, 3=embed, 4=index)")
+    ap.add_argument("--source", type=str, default="demo",
+                    choices=["demo", "flickr30k", "coco"],
+                    help="Data source (default: demo)")
     ap.add_argument("--show-arch", action="store_true",
                     help="Print data storage architecture diagram")
     args = ap.parse_args()
@@ -245,7 +313,7 @@ if __name__ == "__main__":
         show_architecture()
 
     if args.stage == 0 or args.stage == 1:
-        df = stage1_generate_data()
+        df = stage1_load_data(args.source)
     else:
         df = None
 
