@@ -20,12 +20,14 @@ class FAISSIndex(BaseIndex):
 
     def __init__(self, dim: int, index_type: str = "ivfpq",
                  metric: str = "cosine",
-                 nlist: int = 100, m: int = 8, nbits: int = 8):
+                 nlist: int = 100, m: int = 8, nbits: int = 8,
+                 nprobe: int = 16):
         super().__init__(dim, metric)
         self.index_type = index_type
         self.nlist = nlist
         self.m = m
         self.nbits = nbits
+        self.nprobe = nprobe
         self.index = None
         self._id_map = None
 
@@ -54,6 +56,10 @@ class FAISSIndex(BaseIndex):
 
         else:
             raise ValueError(f"Unknown index type: {self.index_type}")
+
+        # Set nprobe for IVF-based indexes
+        if hasattr(self.index, 'nprobe'):
+            self.index.nprobe = self.nprobe
 
         self.index.add(vectors)
         self._id_map = ids if ids is not None else np.arange(len(vectors))
