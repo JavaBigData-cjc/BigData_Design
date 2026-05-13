@@ -23,53 +23,66 @@ sys.path.insert(0, str(PROJECT_ROOT))
 
 
 def load_flickr30k_data(data_dir: str = "data/raw/flickr30k"):
-    """Load real Flickr30k dataset (images + captions)."""
+    """Load real Flickr30k dataset (images + captions).
+
+    Expected structure (from AutoGluon S3 mirror):
+      flickr30k_processed/
+        ├── train.csv     (145K rows: ,caption,image)
+        ├── val.csv       (5K rows)
+        ├── test.csv      (5K rows)
+        └── images/       (31,783 .jpg files)
+    """
     import pandas as pd
-    import numpy as np
 
     data_dir = Path(data_dir)
-    csv_path = data_dir / "captions.csv"
+    processed_dir = data_dir / "flickr30k_processed"
 
-    if not csv_path.exists():
-        print(f"  [WARN] Flickr30k captions not found at {csv_path}")
+    if not processed_dir.exists():
+        print(f"  [WARN] flickr30k_processed not found at {processed_dir}")
         print(f"  Run: python scripts/download_flickr30k.py")
+        return None
+
+    # Load train.csv (main training data)
+    csv_path = processed_dir / "train.csv"
+    if not csv_path.exists():
+        print(f"  [WARN] train.csv not found")
         return None
 
     df = pd.read_csv(csv_path)
     print(f"  Loaded {len(df)} captions from {csv_path}")
+    print(f"  Columns: {list(df.columns)}")
 
-    # Build image path column
-    img_dir = data_dir / "images"
-    if img_dir.exists():
-        # Map image filenames to full paths
-        img_files = {f.stem: str(f) for f in img_dir.glob("*.jpg")}
-        if "image_id" in df.columns:
-            # Try to match by numeric id or filename
-            df["image_path"] = df["image_id"].apply(
-                lambda x: img_files.get(str(x), "")
-            )
-        elif "image_name" in df.columns:
-            df["image_path"] = df["image_name"].apply(
-                lambda x: str(img_dir / x) if x else ""
-            )
-        # Filter out rows without actual image files
-        valid = df["image_path"].apply(lambda p: Path(p).exists() if p else False)
-        print(f"  Matched images: {valid.sum()}/{len(df)}")
-        df = df[valid]
+    # Build absolute image paths: images/xxx.jpg -> data/raw/flickr30k/flickr30k_processed/images/xxx.jpg
+    img_dir = processed_dir / "images"
 
-    # Sample subset for development
+    if "image" in df.columns:
+        # Paths are like "images/1000092795.jpg"
+        df["image_path"] = df["image"].apply(
+            lambda x: str(img_dir / Path(x).name)
+        )
+    elif "image_name" in df.columns:
+        df["image_path"] = df["image_name"].apply(
+            lambda x: str(img_dir / x) if pd.notna(x) else ""
+        )
+
+    # Filter rows where image files actually exist
+    valid_mask = df["image_path"].apply(lambda p: Path(p).exists())
+    if valid_mask.sum() < len(df):
+        print(f"  Matched images: {valid_mask.sum()}/{len(df)}")
+        df = df[valid_mask]
+
+    # Standardize column names
+    if "caption" not in df.columns and "comment" in df.columns:
+        df["caption"] = df["comment"]
+    elif "caption" not in df.columns and "description" in df.columns:
+        df["caption"] = df["description"]
+
+    # Use first N for fast development iteration
     if len(df) > 5000:
-        print(f"  [dev mode] Sampling 5000 from {len(df)} for faster iteration")
+        print(f"  [dev mode] Sampling 5000 from {len(df)} rows (use --full for all)")
         df = df.sample(n=5000, random_state=42).reset_index(drop=True)
 
-    # Ensure standard column names
-    if "caption" not in df.columns:
-        # Try common alternative names
-        for col in ["comment", "description", "text", "sentence"]:
-            if col in df.columns:
-                df["caption"] = df[col]
-                break
-
+    print(f"  Final dataset: {len(df)} rows, {df['image_path'].nunique()} unique images")
     return df
 
 
