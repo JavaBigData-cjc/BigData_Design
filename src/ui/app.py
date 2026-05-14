@@ -51,24 +51,43 @@ def _load_data():
 def _load_index():
     if "index" in _state:
         return
-    emb = np.load(PROJECT_ROOT / "data" / "embeddings" / "flickr30k_full" / "image_embeddings.npy")
+    idx_dir = PROJECT_ROOT / "data" / "indexes"
+    idx_dir.mkdir(parents=True, exist_ok=True)
+    hnsw_path = str(idx_dir / "flickr30k_hnsw")
     from src.indexing.hnsw_lib import HNSWLib
-    print(f"[init] HNSW on {len(emb)} vectors...")
-    idx = HNSWLib(dim=emb.shape[1], M=32, ef_construction=300, ef_search=200, metric="cosine")
-    idx.timed_build(emb)
+    if os.path.exists(f"{hnsw_path}.hnsw"):
+        print(f"[init] Loading saved HNSW index...")
+        idx = HNSWLib.load(hnsw_path)
+        print(f"[init] HNSW loaded from disk ({idx._n_vectors if hasattr(idx, '_n_vectors') else '?'} vectors)")
+    else:
+        emb = np.load(PROJECT_ROOT / "data" / "embeddings" / "flickr30k_full" / "image_embeddings.npy")
+        print(f"[init] Building HNSW on {len(emb)} vectors (one-time, ~200s)...")
+        idx = HNSWLib(dim=emb.shape[1], M=32, ef_construction=300, ef_search=200, metric="cosine")
+        idx.timed_build(emb)
+        print(f"[init] Saving HNSW to disk for future fast load...")
+        idx.save(hnsw_path)
     _state["index"] = idx
-    _state["img_emb"] = emb
+    _state["img_emb"] = None
 
 
 def _load_bm25():
     if "bm25" in _state:
         return
+    idx_dir = PROJECT_ROOT / "data" / "indexes"
+    idx_dir.mkdir(parents=True, exist_ok=True)
+    bm25_path = str(idx_dir / "flickr30k_bm25.pkl")
     from src.retrieval.bm25_index import BM25Index
-    udf = _state["df"]
-    uimgs = _state["unique_imgs"]
-    _state["bm25"] = BM25Index(k1=1.5, b=0.75)
-    _state["bm25"].build([udf[udf["image_path"] == p]["caption"].iloc[0] for p in uimgs])
-    print(f"[init] BM25: {_state['bm25'].num_docs} docs")
+    if os.path.exists(bm25_path):
+        print(f"[init] Loading saved BM25 index...")
+        _state["bm25"] = BM25Index.load(bm25_path)
+        print(f"[init] BM25 loaded: {_state['bm25'].num_docs} docs")
+    else:
+        udf = _state["df"]
+        uimgs = _state["unique_imgs"]
+        _state["bm25"] = BM25Index(k1=1.5, b=0.75)
+        _state["bm25"].build([udf[udf["image_path"] == p]["caption"].iloc[0] for p in uimgs])
+        print(f"[init] BM25 built: {_state['bm25'].num_docs} docs, saving...")
+        _state["bm25"].save(bm25_path)
 
 
 def _load_llm():
