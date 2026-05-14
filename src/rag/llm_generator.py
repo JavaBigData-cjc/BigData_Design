@@ -1,116 +1,124 @@
 """
-LLM Generator for RAG (Retrieval-Augmented Generation).
-Uses Qwen2.5-7B-Instruct (GPTQ 4-bit) for answer generation.
+LLM Generator for RAG using OpenAI-compatible API.
+Supports 通义千问 (DashScope), DeepSeek, OpenAI, SiliconFlow, etc.
+Configure via .env file or environment variables.
 """
-
+import os
 from typing import Optional
 
-import torch
-from transformers import AutoModelForCausalLM, AutoTokenizer
+from dotenv import load_dotenv
+from openai import OpenAI
 
 from .prompt_templates import RAGPromptBuilder
 from .context_builder import ContextBuilder
 
+# Load .env if present
+load_dotenv()
+
 
 class LLMGenerator:
-    """LLM-powered answer generator for RAG pipeline."""
+    """API-based LLM answer generator for RAG pipeline."""
 
-    DEFAULT_MODEL = "Qwen/Qwen2.5-7B-Instruct-GPTQ-Int4"
+    def __init__(
+        self,
+        api_key: str = None,
+        base_url: str = None,
+        model: str = None,
+        max_new_tokens: int = None,
+        temperature: float = None,
+    ):
+        self.api_key = api_key or os.getenv("LLM_API_KEY", "")
+        self.base_url = base_url or os.getenv("LLM_BASE_URL", "https://api.deepseek.com/v1")
+        self.model = model or os.getenv("LLM_MODEL", "deepseek-chat")
+        self.max_new_tokens = max_new_tokens or int(os.getenv("LLM_MAX_TOKENS", "512"))
+        self.temperature = temperature or float(os.getenv("LLM_TEMPERATURE", "0.7"))
 
-    def __init__(self, model_name: str = None,
-                 device_map: str = "auto",
-                 torch_dtype: str = "float16",
-                 max_new_tokens: int = 256,
-                 temperature: float = 0.7):
-        self.model_name = model_name or self.DEFAULT_MODEL
-        self.max_new_tokens = max_new_tokens
-        self.temperature = temperature
-
-        self.tokenizer = None
-        self.model = None
-        self.device_map = device_map
-        self.torch_dtype = getattr(torch, torch_dtype)
-
+        self.client = None
+        self._connected = False
         self.prompt_builder = RAGPromptBuilder()
         self.context_builder = ContextBuilder()
 
-    def load(self):
-        """Load the LLM model and tokenizer into memory."""
-        print(f"[load] Loading {self.model_name}...")
-        self.tokenizer = AutoTokenizer.from_pretrained(
-            self.model_name, trust_remote_code=True
-        )
-        self.model = AutoModelForCausalLM.from_pretrained(
-            self.model_name,
-            device_map=self.device_map,
-            torch_dtype=self.torch_dtype,
-            trust_remote_code=True,
-        )
-        self.model.eval()
-        print(f"[load] Model loaded. VRAM: {torch.cuda.memory_allocated() / 1e9:.1f} GB")
-
-    def unload(self):
-        """Free GPU memory."""
-        self.model = None
-        self.tokenizer = None
-        torch.cuda.empty_cache()
-
     @property
     def is_loaded(self) -> bool:
-        return self.model is not None
+        return self._connected
 
-    def generate(self, query: str, retrieval_results: list[dict],
-                 captions: Optional[dict] = None,
-                 prompt_type: str = "retrieval") -> str:
-        """Generate an answer using RAG.
+    def connect(self):
+        """Initialize API client. No model loading needed for API."""
+        if not self.api_key:
+            raise ValueError(
+                "LLM_API_KEY not set. Copy .env.example to .env and fill in your API key."
+            )
+        self.client = OpenAI(api_key=self.api_key, base_url=self.base_url)
+        self._connected = True
+
+    def generate(
+        self,
+        query: str,
+        retrieval_results: list[dict],
+        prompt_type: str = "retrieval",
+    ) -> str:
+        """Generate RAG answer from retrieval results.
 
         Args:
-            query: User's query text
-            retrieval_results: List of result dicts from HybridRetriever
-            captions: Optional dict[id] -> caption text
-            prompt_type: "retrieval" | "comparison" | "image_query"
+            query: User's query text (or "image upload" for image queries)
+            retrieval_results: List of result dicts from retriever/search
+            prompt_type: "retrieval" | "image_query"
 
         Returns:
             Generated answer string
         """
-        if not self.is_loaded:
-            self.load()
+        if not self._connected:
+            self.connect()
 
-        # Build context from retrieved results
-        context = self.context_builder.build(retrieval_results, captions)
+        # Build context from results
+        context = self.context_builder.build_from_text(
+            retrieval_results, caption_key="caption"
+        )
 
         # Build prompt
-        if prompt_type == "retrieval":
-            prompt = self.prompt_builder.format_retrieval_prompt(query, context)
-        elif prompt_type == "image_query":
-            prompt = self.prompt_builder.format_image_query_prompt(context)
+        if prompt_type == "image_query":
+            user_prompt = self.prompt_builder.format_image_query_prompt(context)
         else:
-            prompt = self.prompt_builder.format_retrieval_prompt(query, context)
+            user_prompt = self.prompt_builder.format_retrieval_prompt(query, context)
 
-        # Apply chat template
         messages = [
             {"role": "system", "content": self.prompt_builder.SYSTEM_PROMPT},
-            {"role": "user", "content": prompt},
+            {"role": "user", "content": user_prompt},
         ]
-        text = self.tokenizer.apply_chat_template(
-            messages, tokenize=False, add_generation_prompt=True
-        )
 
-        inputs = self.tokenizer(text, return_tensors="pt").to(self.model.device)
-
-        with torch.no_grad():
-            outputs = self.model.generate(
-                **inputs,
-                max_new_tokens=self.max_new_tokens,
+        try:
+            response = self.client.chat.completions.create(
+                model=self.model,
+                messages=messages,
+                max_tokens=self.max_new_tokens,
                 temperature=self.temperature,
-                do_sample=self.temperature > 0,
-                pad_token_id=self.tokenizer.eos_token_id,
             )
+            return response.choices[0].message.content.strip()
+        except Exception as e:
+            return f"[LLM Error] {e}"
 
-        # Decode only the new tokens
-        response = self.tokenizer.decode(
-            outputs[0][len(inputs.input_ids[0]):],
-            skip_special_tokens=True
-        )
+    @staticmethod
+    def check_connection() -> dict:
+        """Verify API configuration is valid. Returns status dict."""
+        info = {
+            "api_key_set": bool(os.getenv("LLM_API_KEY", "")),
+            "base_url": os.getenv("LLM_BASE_URL", "https://api.deepseek.com/v1"),
+            "model": os.getenv("LLM_MODEL", "deepseek-chat"),
+        }
 
-        return response.strip()
+        if not info["api_key_set"]:
+            info["status"] = "missing_key"
+            info["message"] = "LLM_API_KEY not set in .env"
+            return info
+
+        try:
+            client = OpenAI(api_key=os.getenv("LLM_API_KEY"), base_url=info["base_url"])
+            # Quick connectivity test
+            client.models.list(extra_headers={"X-Test": "1"})
+            info["status"] = "ok"
+            info["message"] = f"Connected to {info['base_url']}"
+        except Exception as e:
+            info["status"] = "error"
+            info["message"] = str(e)
+
+        return info

@@ -12,9 +12,9 @@ annoy>=1.17.0
 # Sparse Retrieval
 rank-bm25>=0.2.2
 
-# LLM Quantization
-auto-gptq>=0.7.0
-optimum>=1.16.0
+# LLM API
+openai>=1.0.0
+python-dotenv>=1.0.0
 
 # Data Processing
 pyspark>=3.5.0

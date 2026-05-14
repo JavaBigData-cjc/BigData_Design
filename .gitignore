@@ -32,6 +32,8 @@ models/
 
 # Environment
 .env
+.env.local
+.env.production
 .vscode/
 .idea/
 
