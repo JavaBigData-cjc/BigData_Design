@@ -247,7 +247,8 @@ def run_e6_scale_analysis():
                 index = HNSWLib(dim=img_emb.shape[1], M=32, ef_construction=300, ef_search=200, metric="cosine")
             elif algo_name == "FAISS_IVFPQ":
                 nlist = max(10, min(scale // 40, 400))  # at least 40 samples per cluster
-                index = FAISSIndex(dim=img_emb.shape[1], index_type="ivfpq", nlist=nlist, nprobe=64)
+                # m=64 matches E1: 512/64=8 dims per sub-vector with 8-bit codes (moderate compression)
+                index = FAISSIndex(dim=img_emb.shape[1], index_type="ivfpq", nlist=nlist, m=64, nprobe=64)
             elif algo_name == "Annoy":
                 index = AnnoyIndexWrapper(dim=img_emb.shape[1], n_trees=min(50, scale // 20 + 10), metric="cosine")
             t0 = time.perf_counter()
