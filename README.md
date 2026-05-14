@@ -7,7 +7,7 @@
 
 面向多模态数据的**混合检索增强生成（RAG）系统**，支持文本搜图和图搜文本。集成 CLIP 跨模态嵌入、4种向量索引算法（HNSW / FAISS IVF-PQ / LSH / Annoy），创新性地提出**自适应混合检索策略**（稠密向量 + 稀疏 BM25 + 动态权重分配），结合大模型 API 实现端到端的检索与智能生成。
 
-> 大数据课程设计项目 | 大三保研科研经历包装
+> 大数据课程设计项目
 
 ## 系统架构
 
@@ -212,7 +212,7 @@ pytest tests/test_embedding.py -v   # 嵌入模块（需要下载CLIP模型）
 - **Graph RAG**：构建图文知识图谱，支持多跳推理
 - **多轮对话**：支持上下文的交互式检索对话
 - **跨语言 CLIP**：替换为多语言 CLIP（`sentence-transformers/clip-ViT-B-32-multilingual-v1`）原生支持中文
-- **论文投稿**：整理为 workshop / 中文期刊论文
+- **Workshop 投稿**：整理实验结果，投稿相关 workshop
 
 ## 参考文献
 
