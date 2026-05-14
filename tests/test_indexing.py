@@ -62,7 +62,9 @@ class TestManualHNSW:
         # Self-retrieval
         query = vectors[10:11]
         ids, dists = hnsw.search(query, k=3)
-        assert 10 in ids[0]  # Self should be in top results
+        # When single query, search returns 1D arrays
+        assert ids.ndim == 1
+        assert 10 in ids  # Self should be in top results
 
 
 class TestCosineLSH:
@@ -81,4 +83,6 @@ class TestCosineLSH:
         # Search
         query = vectors[0:1]
         ids, dists = lsh.search(query, k=5)
-        assert len(ids[0]) == 5
+        # Single query returns 1D arrays
+        assert ids.ndim == 1
+        assert len(ids) == 5

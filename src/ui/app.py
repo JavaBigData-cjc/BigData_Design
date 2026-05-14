@@ -153,11 +153,11 @@ def on_init():
         _load_bm25()
         llm = _load_llm()
         n = len(_state["unique_imgs"])
-        msg = f"✅ Ready: {n} images indexed, HNSW+BM25 loaded"
+        msg = f"✅ 系统就绪：已索引 {n} 张图片，HNSW + BM25 已加载"
         if llm:
-            msg += f", LLM: {llm.model}"
+            msg += f"，LLM 模型: {llm.model}"
         else:
-            msg += " (LLM not configured - set LLM_API_KEY in .env)"
+            msg += "（LLM 未配置，请在 .env 中设置 LLM_API_KEY）"
         return msg
     except Exception as e:
         import traceback
@@ -166,9 +166,9 @@ def on_init():
 
 def on_text_search(query, strategy):
     if "index" not in _state:
-        return [], "❌ Click Initialize first", [], "", ""
+        return [], "❌ 请先点击「初始化系统」按钮", [], "", ""
     if not query.strip():
-        return [], "Enter a query", [], "", ""
+        return [], "请输入查询文本", [], "", ""
 
     enc = _state["encoder"]
     qv = enc.encode_texts([query])[0]
@@ -176,13 +176,13 @@ def on_text_search(query, strategy):
 
     if strategy == "Vector (HNSW)":
         ids, sc, lat = _dense_search(qv)
-        info = f"HNSW vector search | {lat:.1f}ms"
+        info = f"HNSW 向量检索 | {lat:.1f}ms"
     elif strategy == "BM25 (Keyword)":
         ids, sc = _sparse_search(query)
-        info = "BM25 keyword search"
+        info = "BM25 关键词检索"
     else:
         ids, sc, wd, ws, qt = _hybrid_search(query, qv)
-        info = f"Hybrid Adaptive | dense={wd:.2f} sparse={ws:.2f} | query_type={qt.value}"
+        info = f"混合自适应检索 | 向量权重={wd:.2f} 关键词权重={ws:.2f} | 查询类型={qt.value}"
 
     gallery, cap_txt, rows = _format(ids, sc)
 
@@ -199,16 +199,16 @@ def on_text_search(query, strategy):
 
 def on_image_search(image):
     if "index" not in _state:
-        return "❌ Click Initialize first", "", ""
+        return "❌ 请先点击「初始化系统」按钮", "", ""
     if image is None:
-        return "Upload an image", "", ""
+        return "请先上传一张图片", "", ""
 
     enc = _state["encoder"]
     qv = enc.encode_images([image])[0]
     ids, sc, lat = _dense_search(qv, k=10)
     uimgs = _state["unique_imgs"]
 
-    txt = f"### Image-to-Text Results ({lat:.1f}ms)\n\n"
+    txt = f"### 图搜文本结果（延迟 {lat:.1f}ms）\n\n"
     llm_in = []
     for rank, (iid, s) in enumerate(zip(ids, sc)):
         if int(iid) >= len(uimgs):
@@ -227,74 +227,95 @@ def on_image_search(image):
         except Exception as e:
             llm_out = f"[LLM: {e}]"
 
-    return f"Search latency: {lat:.1f}ms", txt, llm_out
+    return f"检索延迟: {lat:.1f}ms", txt, llm_out
 
 
 # ── UI ──────────────────────────────────────────────────────────────
 
 def create_ui():
-    with gr.Blocks(title="Cross-Modal RAG", theme=gr.themes.Soft(primary_hue="indigo")) as app:
+    with gr.Blocks(title="跨模态混合检索增强生成系统", theme=gr.themes.Soft(primary_hue="indigo")) as app:
         gr.Markdown("""
-        # Cross-Modal Hybrid RAG System
-        **CLIP ViT-B/32 + HNSW + BM25 + Adaptive Fusion + LLM**
+        # 跨模态混合检索增强生成 (RAG) 系统
+        **CLIP ViT-B/32 + HNSW + BM25 + 自适应融合 + LLM**
 
-        Text → Image retrieval with AI-generated answers. Configure `.env` for LLM.
+        支持文本搜图、图搜文本，结合大模型生成智能回答。请先配置 `.env` 文件启用 LLM 功能。
         """)
 
         with gr.Row():
-            init_btn = gr.Button("Initialize System", variant="primary", size="sm")
-            init_msg = gr.Textbox(label="Status", interactive=False, scale=3)
+            init_btn = gr.Button("🚀 初始化系统", variant="primary", size="sm")
+            init_msg = gr.Textbox(label="系统状态", interactive=False, scale=3)
 
         gr.Markdown("---")
 
         with gr.Tabs():
-            with gr.TabItem("Text-to-Image"):
+            with gr.TabItem("📝 文本搜图"):
                 with gr.Row():
                     with gr.Column(scale=3):
-                        q = gr.Textbox(label="Query", placeholder="Describe an image...", lines=2)
+                        q = gr.Textbox(label="输入查询", placeholder="用自然语言描述你想找的图片...", lines=2)
                         with gr.Row():
-                            strat = gr.Radio(["Vector (HNSW)", "BM25 (Keyword)", "Hybrid (Adaptive)"],
-                                             value="Hybrid (Adaptive)", label="Strategy")
-                            btn = gr.Button("Search", variant="primary")
-                        sinfo = gr.Textbox(label="Info", interactive=False)
-                        llm = gr.Textbox(label="LLM Answer", lines=5, interactive=False, placeholder="(set LLM_API_KEY in .env)")
+                            strat = gr.Radio(
+                                [("向量检索 (HNSW)", "Vector (HNSW)"),
+                                 ("关键词检索 (BM25)", "BM25 (Keyword)"),
+                                 ("混合检索 (自适应融合)", "Hybrid (Adaptive)")],
+                                value="Hybrid (Adaptive)",
+                                label="检索策略"
+                            )
+                            btn = gr.Button("🔍 搜索", variant="primary")
+                        sinfo = gr.Textbox(label="检索信息", interactive=False)
+                        llm = gr.Textbox(label="LLM 智能回答", lines=5, interactive=False, placeholder="（请先在 .env 中配置 LLM_API_KEY）")
                     with gr.Column(scale=2):
-                        gal = gr.Gallery(label="Retrieved Images", columns=2, height=400, object_fit="contain")
-                with gr.Accordion("Details", open=False):
-                    tbl = gr.Dataframe(headers=["Rank", "Score", "Caption"], label="Results")
-                    capt = gr.Textbox(label="Captions", lines=6, interactive=False)
+                        gal = gr.Gallery(label="检索到的图片", columns=2, height=400, object_fit="contain")
+                with gr.Accordion("详细结果", open=False):
+                    tbl = gr.Dataframe(headers=["排名", "相似度", "图片描述"], label="检索结果列表")
+                    capt = gr.Textbox(label="图片描述文本", lines=6, interactive=False)
 
-            with gr.TabItem("Image-to-Text"):
+            with gr.TabItem("🖼️ 图搜文本"):
                 with gr.Row():
                     with gr.Column(scale=2):
-                        img_in = gr.Image(label="Upload Image", type="pil", height=300)
-                        ibtn = gr.Button("Find Similar", variant="primary")
-                        ilat = gr.Textbox(label="Latency", interactive=False)
+                        img_in = gr.Image(label="上传图片", type="pil", height=300)
+                        ibtn = gr.Button("🔍 查找相似", variant="primary")
+                        ilat = gr.Textbox(label="检索延迟", interactive=False)
                     with gr.Column(scale=3):
-                        ires = gr.Markdown("Results will appear here...")
-                        illm = gr.Textbox(label="LLM Analysis", lines=5, interactive=False)
+                        ires = gr.Markdown("上传图片后点击搜索，结果将显示在这里...")
+                        illm = gr.Textbox(label="LLM 图片分析", lines=5, interactive=False)
 
-            with gr.TabItem("Setup"):
+            with gr.TabItem("⚙️ 配置说明"):
                 gr.Markdown("""
-                ### How to configure LLM
-                Copy the example file and fill in your API key:
+                ### 如何配置 LLM 大模型
+
+                1. 复制环境变量模板并填入你的 API 密钥：
                 ```bash
                 cp .env.example .env
-                # Edit .env with your credentials
+                # 编辑 .env 文件，填入你的 API 密钥
                 ```
 
-                **Supported providers** (any OpenAI-compatible API):
+                2. `.env` 文件示例：
+                ```ini
+                LLM_API_KEY=sk-your-api-key-here
+                LLM_BASE_URL=https://api.deepseek.com/v1
+                LLM_MODEL=deepseek-chat
+                LLM_MAX_TOKENS=512
+                LLM_TEMPERATURE=0.7
+                ```
 
-                | Provider | LLM_BASE_URL | LLM_MODEL |
-                |----------|-------------|-----------|
+                **支持的 LLM 提供商**（兼容 OpenAI API 格式即可）：
+
+                | 提供商 | LLM_BASE_URL | LLM_MODEL |
+                |--------|-------------|-----------|
                 | DeepSeek | https://api.deepseek.com/v1 | deepseek-chat |
                 | 通义千问 | https://dashscope.aliyuncs.com/compatible-mode/v1 | qwen-plus |
                 | OpenAI | https://api.openai.com/v1 | gpt-4o-mini |
                 | SiliconFlow | https://api.siliconflow.cn/v1 | Qwen/Qwen2.5-7B-Instruct |
 
-                ### Requirements
+                ### 环境依赖
                 ```bash
                 pip install gradio openai python-dotenv
+                ```
+
+                ### 启动方式
+                ```bash
+                python -m src.ui.app
+                # 浏览器打开 http://127.0.0.1:7860
                 ```
                 """)
 
@@ -310,8 +331,8 @@ def main():
     app = create_ui()
     host = os.getenv("GRADIO_HOST", "127.0.0.1")
     port = int(os.getenv("GRADIO_PORT", "7860"))
-    print(f"\n  Gradio: http://{host}:{port}")
-    print("  Press Ctrl+C to stop\n")
+    print(f"\n  🌐 跨模态RAG系统已启动: http://{host}:{port}")
+    print("  按 Ctrl+C 停止服务\n")
     app.launch(server_name=host, server_port=port, share=False)
 
 

@@ -35,9 +35,19 @@ class TestQueryRouter:
 
     def test_classify_keyword(self):
         from src.retrieval.query_router import QueryRouter, QueryType
-        router = QueryRouter()
-        q = "red car blue sky automobile vehicle"
-        assert router.classify(q) in (QueryType.KEYWORD, QueryType.HYBRID)
+        from src.retrieval.bm25_index import BM25Index
+        # Build index with many docs so rare words get high IDF
+        docs = []
+        for i in range(100):
+            docs.append(f"document number {i} contains some common words")
+        docs[0] = "endoplasmic reticulum mitochondria lysosome ribosome"
+        bm25 = BM25Index()
+        bm25.build(docs)
+        router = QueryRouter(bm25_index=bm25)
+        q = "endoplasmic reticulum mitochondria"
+        result = router.classify(q)
+        # With 100 docs and df=1, IDF per rare word ≈ 4.2 > 3 → KEYWORD
+        assert result in (QueryType.KEYWORD, QueryType.HYBRID)
 
     def test_classify_metadata(self):
         from src.retrieval.query_router import QueryRouter, QueryType
