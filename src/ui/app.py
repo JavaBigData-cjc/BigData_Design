@@ -128,6 +128,44 @@ def _hybrid_search(q_text, q_vec, k=10):
     return np.array(uid)[top], fused[top], w_d, w_s, q_type
 
 
+def _has_chinese(text: str) -> bool:
+    """Check if text contains Chinese characters."""
+    return any('一' <= c <= '鿿' for c in text)
+
+
+def _translate_if_chinese(query: str) -> str:
+    """Translate Chinese queries to English for better CLIP retrieval.
+    Uses the loaded LLM; falls back to original query if LLM unavailable."""
+    if not _has_chinese(query):
+        return query
+    llm = _state.get("llm")
+    if llm is None:
+        return query
+    try:
+        from src.rag.prompt_templates import RAGPromptBuilder
+        prompt = RAGPromptBuilder.format_translate_prompt(query)
+        messages = [
+            {"role": "system", "content": "You are a translator. Translate Chinese to English concisely."},
+            {"role": "user", "content": prompt},
+        ]
+        response = llm.client.chat.completions.create(
+            model=llm.model,
+            messages=messages,
+            max_tokens=128,
+            temperature=0.3,
+        )
+        translated = response.choices[0].message.content.strip()
+        # Clean up common prefixes
+        for prefix in ["English translation:", "Translation:", "English:"]:
+            if translated.lower().startswith(prefix.lower()):
+                translated = translated[len(prefix):].strip()
+        print(f"[translate] '{query[:50]}' -> '{translated[:80]}'")
+        return translated
+    except Exception as e:
+        print(f"[translate] failed: {e}")
+        return query
+
+
 def _format(ids, scores, show_images=True):
     gallery, cap_text, rows = [], "", []
     uimgs = _state["unique_imgs"]
@@ -170,19 +208,28 @@ def on_text_search(query, strategy):
     if not query.strip():
         return [], "请输入查询文本", [], "", ""
 
+    # Auto-translate Chinese queries to English for better CLIP retrieval
+    search_query = _translate_if_chinese(query) if _has_chinese(query) else query
+
     enc = _state["encoder"]
-    qv = enc.encode_texts([query])[0]
+    qv = enc.encode_texts([search_query])[0]
     rows, info, llm_out = [], "", ""
 
     if strategy == "Vector (HNSW)":
         ids, sc, lat = _dense_search(qv)
         info = f"HNSW 向量检索 | {lat:.1f}ms"
+        if search_query != query:
+            info += f" | 翻译: {search_query}"
     elif strategy == "BM25 (Keyword)":
-        ids, sc = _sparse_search(query)
+        ids, sc = _sparse_search(search_query)
         info = "BM25 关键词检索"
+        if search_query != query:
+            info += f" | 翻译: {search_query}"
     else:
-        ids, sc, wd, ws, qt = _hybrid_search(query, qv)
+        ids, sc, wd, ws, qt = _hybrid_search(search_query, qv)
         info = f"混合自适应检索 | 向量权重={wd:.2f} 关键词权重={ws:.2f} | 查询类型={qt.value}"
+        if search_query != query:
+            info += f" | 翻译: {search_query}"
 
     gallery, cap_txt, rows = _format(ids, sc)
 
@@ -238,7 +285,7 @@ def create_ui():
         # 跨模态混合检索增强生成 (RAG) 系统
         **CLIP ViT-B/32 + HNSW + BM25 + 自适应融合 + LLM**
 
-        支持文本搜图、图搜文本，结合大模型生成智能回答。请先配置 `.env` 文件启用 LLM 功能。
+        支持文本搜图、图搜文本，结合大模型生成智能回答。请先点击 **初始化系统** 按钮加载索引。
         """)
 
         with gr.Row():
@@ -251,7 +298,11 @@ def create_ui():
             with gr.TabItem("📝 文本搜图"):
                 with gr.Row():
                     with gr.Column(scale=3):
-                        q = gr.Textbox(label="输入查询", placeholder="用自然语言描述你想找的图片...", lines=2)
+                        q = gr.Textbox(
+                            label="输入查询（支持中文，自动翻译为英文检索）",
+                            placeholder="例如：a dog running on the beach / 一个在沙滩上跑步的人 / a red car parked on the street",
+                            lines=2
+                        )
                         with gr.Row():
                             strat = gr.Radio(
                                 [("向量检索 (HNSW)", "Vector (HNSW)"),
@@ -265,6 +316,33 @@ def create_ui():
                         llm = gr.Textbox(label="LLM 智能回答", lines=5, interactive=False, placeholder="（请先在 .env 中配置 LLM_API_KEY）")
                     with gr.Column(scale=2):
                         gal = gr.Gallery(label="检索到的图片", columns=2, height=400, object_fit="contain")
+                with gr.Accordion("💡 使用技巧 & 示例查询", open=False):
+                    gr.Markdown("""
+                    ### 怎么提问效果好？
+
+                    **CLIP 模型是纯英文的**，中文输入会自动翻译成英文再检索。翻译质量会影响结果。
+                    直接用英文提问效果最好，中文也能用。
+
+                    **推荐示例查询**（英文更精准）：
+                    | 类别 | 查询示例 |
+                    |------|---------|
+                    | 人物活动 | `a man playing guitar on stage` |
+                    | 人物活动 | `children playing in the park` |
+                    | 动物 | `a dog catching a frisbee` |
+                    | 动物 | `a cat sleeping on a sofa` |
+                    | 街景 | `people walking on a busy city street` |
+                    | 自然 | `a mountain landscape at sunset` |
+                    | 运动 | `a soccer player kicking a ball` |
+
+                    **中文查询也可以**（系统会自动翻译）：
+                    - `一个在舞台上弹吉他的男人`
+                    - `在公园里玩耍的孩子们`
+                    - `一只正在接飞盘的狗`
+
+                    **避免的提问方式**（太宽泛，检索效果差）：
+                    - `找一张男人的照片` → 改成 `a man wearing a suit in an office`
+                    - `有没有动物的图片` → 改成 `a brown dog running in the grass`
+                    """)
                 with gr.Accordion("详细结果", open=False):
                     tbl = gr.Dataframe(headers=["排名", "相似度", "图片描述"], label="检索结果列表")
                     capt = gr.Textbox(label="图片描述文本", lines=6, interactive=False)
@@ -272,12 +350,29 @@ def create_ui():
             with gr.TabItem("🖼️ 图搜文本"):
                 with gr.Row():
                     with gr.Column(scale=2):
-                        img_in = gr.Image(label="上传图片", type="pil", height=300)
+                        img_in = gr.Image(label="上传图片（请用非训练集的图片测试）", type="pil", height=300)
                         ibtn = gr.Button("🔍 查找相似", variant="primary")
                         ilat = gr.Textbox(label="检索延迟", interactive=False)
                     with gr.Column(scale=3):
                         ires = gr.Markdown("上传图片后点击搜索，结果将显示在这里...")
                         illm = gr.Textbox(label="LLM 图片分析", lines=5, interactive=False)
+                with gr.Accordion("💡 图搜文测试技巧", open=False):
+                    gr.Markdown("""
+                    ### 如何测试图搜文？
+
+                    **重要：不要使用 Flickr30k 数据集中的图片！**
+                    如果上传训练集图片，系统会匹配到它自己，相似度≈1.0（相当于"作弊"）。
+
+                    **推荐测试图片来源**：
+                    1. 用手机随便拍一张照片（你的桌面、窗外风景、书本等）
+                    2. 从网上下载任意图片（不属于 Flickr30k）
+                    3. 截图一张网页或社交媒体上的图片
+
+                    **效果预期**：
+                    - 相似度通常在 0.3~0.6 之间（取决于图片内容）
+                    - 如果图片内容是常见场景（街道、海滩、人物），匹配效果较好
+                    - 如果是非常小众或抽象的内容，匹配效果一般
+                    """)
 
             with gr.TabItem("⚙️ 配置说明"):
                 gr.Markdown("""

@@ -7,51 +7,60 @@ class RAGPromptBuilder:
     """Build structured prompts for the LLM generation stage."""
 
     SYSTEM_PROMPT = (
-        "You are a cross-modal retrieval assistant. Your task is to help users "
-        "understand the relationship between their query and the retrieved image-text "
-        "pairs. Be concise, accurate, and helpful."
+        "你是一个跨模态检索助手。请始终用中文回答用户的问题。"
+        "你的任务是根据用户查询和检索到的图文配对，生成简洁、准确、有用的回答。"
     )
 
-    RETRIEVAL_PROMPT = """You are a cross-modal retrieval assistant. Based on the user's query and the retrieved image-caption pairs, provide a helpful response.
+    RETRIEVAL_PROMPT = """你是一个跨模态检索助手。根据用户查询和检索到的图片描述，请用中文回答。
 
-User query: {query}
+用户查询: {query}
 
-Retrieved results:
+检索结果（按相似度排序）:
 {context}
 
-Please:
-1. Summarize the most relevant results
-2. Explain why the top result matches the query
-3. If results seem poor, suggest query refinements
-4. Keep the response concise (3-5 sentences)
+请做到：
+1. 概括最相关的检索结果
+2. 解释为什么排名第一的结果与查询匹配
+3. 如果结果不佳，建议优化查询词
+4. 回答控制在3-5句话
 
-Answer:"""
+请用中文回答:"""
 
-    COMPARISON_PROMPT = """You are analyzing multiple retrieval strategies for the same query. Compare the results.
+    COMPARISON_PROMPT = """比较两种检索策略的结果差异。
 
-User query: {query}
+用户查询: {query}
 
-Results from strategy A ({strategy_a}):
+策略A ({strategy_a})的结果:
 {context_a}
 
-Results from strategy B ({strategy_b}):
+策略B ({strategy_b})的结果:
 {context_b}
 
-Which strategy produced better results and why? (2-3 sentences)
+哪种策略效果更好？为什么？（2-3句话，用中文回答）
 
-Answer:"""
+请用中文回答:"""
 
-    IMAGE_QUERY_PROMPT = """A user has uploaded an image and wants to find similar content.
+    IMAGE_QUERY_PROMPT = """用户上传了一张图片，希望找到相似内容。
 
-Retrieved captions:
+检索到的图片描述（按相似度排序）:
 {context}
 
-Please:
-1. Describe what patterns/themes the retrieved captions share
-2. Summarize what the retrieved content reveals about the uploaded image
-3. Be concise (2-3 sentences)
+请做到：
+1. 描述这些检索结果共同的主题或模式
+2. 根据检索结果推断用户上传图片的内容
+3. 回答控制在2-3句话
 
-Answer:"""
+请用中文回答:"""
+
+    TRANSLATE_PROMPT = """Translate the following Chinese query into concise English for image search. Only output the translation, nothing else.
+
+Chinese query: {query}
+
+English translation:"""
+
+    @classmethod
+    def format_translate_prompt(cls, query: str) -> str:
+        return cls.TRANSLATE_PROMPT.format(query=query)
 
     @classmethod
     def format_retrieval_prompt(cls, query: str, context: str) -> str:
