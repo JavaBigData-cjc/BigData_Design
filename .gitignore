@@ -3,6 +3,10 @@ data/raw/
 data/processed/
 data/embeddings/
 data/indexes/
+data/demo/
+
+# Planning documents (not for submission)
+demand/
 
 # Python
 __pycache__/
@@ -22,6 +26,9 @@ models/
 *.pth
 *.ckpt
 *.index
+
+# Claude Code
+.claude/
 
 # Environment
 .env
@@ -46,6 +53,7 @@ derby.log
 # Report
 report/*.doc
 report/*.docx
+report/data/
 
 # Credentials
 *.key
