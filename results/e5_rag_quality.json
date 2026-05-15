@@ -7261,5 +7261,20 @@
         "usefulness": null
       }
     }
-  ]
+  ],
+  "auto_metrics": {
+    "text_to_image": {
+      "llm_response_rate": 0.98,
+      "avg_top1_cosine_similarity": 0.6092,
+      "llm_honesty_rate": 0.9,
+      "note": "自由文本查询 vs Flickr30k长标注，语义差异导致检索质量有限。Top-1均值0.61说明很多查询没有好的匹配。"
+    },
+    "image_to_text": {
+      "llm_response_rate": 1.0,
+      "self_match_count": 2,
+      "avg_top1_cosine_non_self": 0.7387,
+      "note": "使用训练集图片(2/50自匹配)。非自匹配均值0.7387说明能检索到不同程度相似的图片。建议用外部图片做真实测试。"
+    },
+    "summary": "自动指标仅反映LLM响应情况和检索余弦值。LLM生成质量(相关性/准确性/有用性)仍需人工评分。"
+  }
 }
