@@ -51,9 +51,9 @@ def _load_data():
 def _load_index():
     if "index" in _state:
         return
-    idx_dir = PROJECT_ROOT / "data" / "indexes"
+    idx_dir = PROJECT_ROOT / "data" / "indexes" / "flickr30k"
     idx_dir.mkdir(parents=True, exist_ok=True)
-    hnsw_path = str(idx_dir / "flickr30k_hnsw")
+    hnsw_path = str(idx_dir / "hnsw_lib")
     from src.indexing.hnsw_lib import HNSWLib
     if os.path.exists(f"{hnsw_path}.hnsw"):
         print(f"[init] Loading saved HNSW index...")
@@ -73,9 +73,9 @@ def _load_index():
 def _load_bm25():
     if "bm25" in _state:
         return
-    idx_dir = PROJECT_ROOT / "data" / "indexes"
+    idx_dir = PROJECT_ROOT / "data" / "indexes" / "flickr30k"
     idx_dir.mkdir(parents=True, exist_ok=True)
-    bm25_path = str(idx_dir / "flickr30k_bm25.pkl")
+    bm25_path = str(idx_dir / "bm25.pkl")
     from src.retrieval.bm25_index import BM25Index
     if os.path.exists(bm25_path):
         print(f"[init] Loading saved BM25 index...")
