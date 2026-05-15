@@ -46,9 +46,10 @@
       ],
       "llm_answer": "根据当前检索结果，最相关的描述均与您的查询“a man playing guitar on a stage”不匹配，其中排名第一的是一条关于儿童涉水的画面。它之所以位列第一，可能是由于模型对“person”和动态场景的泛化误判，但内容上完全没有吉他、舞台或成年男性元素。建议您将查询细化，例如改为“舞台上的吉他手”或补充“聚光灯下的独奏”，以强化关键语义。若需更精准的跨模态结果，可使用中文短语搭配关键名词。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": 4,
+        "accuracy": 5,
+        "usefulness": 5,
+        "comment": "回答诚实指出检索结果完全不相关，准确分析了原因并提供了有用的查询改进建议，高度可信且对用户有帮助。"
       }
     },
     {
@@ -88,9 +89,10 @@
       ],
       "llm_answer": "根据检索结果，最相关的是描述“三个孩子在户外玩耍，其中两个在金属桶秋千上”的图像，但它与查询“儿童在公园踢足球”并不完全一致。排名第一的结果匹配了“儿童玩耍”的场景，却未体现“踢足球”和“公园”这两个核心要素，可能是由于足球活动未出现或标注不准确。建议优化查询词，尝试更具体的短语如“孩子们在草地踢球”或“公园里的足球游戏”，以提高检索精度。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": 5,
+        "accuracy": 5,
+        "usefulness": 5,
+        "comment": "回答诚实分析检索结果不匹配查询，未编造内容，并提供了有价值的改进建议。"
       }
     },
     {
@@ -130,9 +132,10 @@
       ],
       "llm_answer": "检索到的结果中，最相关的是[1]，描述了户外野餐桌和烧烤场景，但并未出现女性看书；[2]提到一位穿红夹克的女性在吃零食，仅部分匹配了“女性”。这些结果都与查询“一个女人在长椅上看书”的核心画面不符，因此整体匹配度很低。建议您优化查询词，例如使用更具体的描述“公园长椅上看书的女性”或“女性坐在长椅阅读”，以凸显场景和动作细节，提升检索精准度。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": 5,
+        "accuracy": 5,
+        "usefulness": 4,
+        "comment": "回答直接分析了检索结果与查询的不匹配，诚实准确，并给出了具体的优化建议，帮助用户提升检索效果。"
       }
     },
     {
@@ -172,9 +175,10 @@
       ],
       "llm_answer": "检索到的最相关结果是一名男子在空中跳跃，但该图像与“婚礼派对上人们跳舞”的查询完全无关，其他结果也均未出现婚礼或多人跳舞的场景。排名第一的结果可能因为捕捉到“跳跃”这一动态姿势而获得了较高分数，但缺乏“婚礼”“派对”“人群”等关键视觉元素，匹配度很低。当前检索结果不够理想，建议将查询优化为更具体的表达，例如“婚礼舞池中的宾客跳舞”或“婚宴上的人群舞蹈”，以帮助模型更好地聚焦场景。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": -1,
+        "accuracy": -1,
+        "usefulness": -1,
+        "comment": "Expecting value: line 1 column 1 (char 0)"
       }
     },
     {
@@ -214,9 +218,10 @@
       ],
       "llm_answer": "检索结果中并没有直接匹配“厨师在厨房烹饪”的图片描述。排名第一的图文是两名杂耍者使用火焰棒表演，与查询关联度很低，可能仅因“火焰”元素被误判，但整体场景（表演、人群）与烹饪无关。由于检索效果不佳，建议优化查询词，例如使用更具体的中文描述“厨师正在厨房炒菜”或“cooking chef in kitchen with stove”，以提升召回准确性。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": -1,
+        "accuracy": -1,
+        "usefulness": -1,
+        "comment": "Expecting value: line 1 column 1 (char 0)"
       }
     },
     {
@@ -256,9 +261,10 @@
       ],
       "llm_answer": "根据您的查询“a musician performing with a band”，最匹配的结果[1]展现了一位女歌手在蓝顶房间中歌唱，同时乐队设备正在准备，这直接对应了“音乐家与乐队表演”的场景。该结果得分最高，因为描述中明确包含主唱（音乐家）和乐队准备工作，与查询意图紧密吻合。其他结果如独奏音乐家、无关场景等均偏离了“乐队合演”的核心。若想检索到更典型的舞台演出画面，可尝试在查询中加入“舞台灯光”或“现场演出”等词。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": -1,
+        "accuracy": -1,
+        "usefulness": -1,
+        "comment": "Expecting value: line 1 column 1 (char 0)"
       }
     },
     {
@@ -298,9 +304,10 @@
       ],
       "llm_answer": "检索到的最相关结果是消防员站在消防车旁，但这与用户查询“一个人在街上遛狗”完全不匹配。排名第一的结果虽然得分最高，但其描述中完全没有出现“遛狗”或“街道”等关键元素，可能因为颜色和人物存在等低级视觉特征产生了误匹配。当前检索结果都不理想，建议尝试更具体的查询，比如“一个人用绳子牵着狗走在人行道上”，或者使用更明确的视觉概念关键词如“leash, sidewalk”。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": 4,
+        "accuracy": 5,
+        "usefulness": 5,
+        "comment": "回答诚实指出检索结果不相关，提供具体改进建议，对用户很有帮助。"
       }
     },
     {
@@ -340,9 +347,10 @@
       ],
       "llm_answer": "最相关的检索结果是第二位：一名男子在水中将小男孩抛起并准备接住他，描述了水中嬉戏的场景，与“儿童在泳池游泳”的查询部分吻合。然而，排名第一的结果得分最高（0.600），却是女子坐在桌边的画面，完全不包含泳池或儿童元素，这表明检索模型可能混淆了“水”或“游泳”的视觉特征，导致误匹配。若想获得更准确的泳池儿童图片，建议优化查询词，例如使用“children swimming in outdoor pool”或“kids splashing water”。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": -1,
+        "accuracy": -1,
+        "usefulness": -1,
+        "comment": "Expecting value: line 1 column 1 (char 0)"
       }
     },
     {
@@ -382,9 +390,10 @@
       ],
       "llm_answer": "最相关的检索结果是第3项：一个穿西装的年轻男子在公共交通上靠着栏杆打盹，这至少包含了“穿西装的男子”这一要素，但与“做演示”的场景完全不符。排名第一的结果之所以被检出，可能是由于模型错误地将“灰色夹克、紫色帽子”等视觉特征与“西装”关联，实际上内容却是检查钞票的街头艺人，这与查询几乎无关。整体来看，所有返回结果都不理想，建议将查询词修改为更具体的表述，例如“businessman giving a presentation on stage”，以提高检索准确度。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": -1,
+        "accuracy": -1,
+        "usefulness": -1,
+        "comment": "Expecting value: line 1 column 1 (char 0)"
       }
     },
     {
@@ -424,9 +433,10 @@
       ],
       "llm_answer": "根据检索到的图片描述，没有任何结果直接显示两人在咖啡馆喝咖啡的场景。排名第一的图片描述的是城市人行道上一位穿彩色裙子的女子驾驶电动轮椅，一名男子走向马路，与查询中的“两人喝咖啡”毫无关联，只是勉强涉及了“两人”这一元素。这次检索效果不佳，建议您优化查询词，比如更具体地使用“情侣喝咖啡”、“咖啡馆内两人对坐”或“享用咖啡的两人”，以提高匹配度。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": -1,
+        "accuracy": -1,
+        "usefulness": -1,
+        "comment": "Unterminated string starting at: line 1 column 61 (char 60)"
       }
     },
     {
@@ -466,9 +476,10 @@
       ],
       "llm_answer": "根据您提供的查询“一只棕色狗在草地上奔跑”，检索到的图片描述均不匹配。排名第一的结果是“人们正在登上一列前端涂成黄色的火车”，这与狗和草地毫无关联。其余结果涉及登山、烧烤、过桥和小孩玩耍，同样不相关。建议您优化查询词，例如更具体地描述狗的品种、草地环境或动作，或者直接使用中文查询“棕色狗在草地跑”。结果不佳，请尝试不同表述。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": -1,
+        "accuracy": -1,
+        "usefulness": -1,
+        "comment": "Unterminated string starting at: line 1 column 2 (char 1)"
       }
     },
     {
@@ -508,9 +519,10 @@
       ],
       "llm_answer": "检索到的结果中，没有与“猫在沙发上睡觉”直接匹配的描述。排名第一的图像显示几位女性围坐在书架旁的桌子边，这很可能因为模型将该场景中的柔软布料或角落轮廓误判为动物或沙发形状，从而得到0.600的相似度分，但实际上完全不相关。建议优化查询，改用更具体的描述，例如“一只橘猫蜷缩在棕色皮质沙发上闭眼睡觉”，并尝试加入颜色、材质等细节来提升检索准确性。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": -1,
+        "accuracy": -1,
+        "usefulness": -1,
+        "comment": "Unterminated string starting at: line 1 column 33 (char 32)"
       }
     },
     {
@@ -550,9 +562,10 @@
       ],
       "llm_answer": "检索结果中没有出现与“马在田野上奔跑”直接相关的内容，排名最高的几项分别是海滩玩耍、登火车、演奏乐器、登山和冰淇淋店场景，都与用户查询无关。\n\n排名第一的图片描述是三个男孩在沙滩拿着板球拍，它之所以相似度得分最高，可能是因为检索模型错误地将“galloping”的动作或“field”的开放空间关联到了海滩场景，但语义上完全不匹配。\n\n由于所有结果均未命中目标，建议优化查询词，例如尝试更具体的英文描述“horse running in meadow”或使用中文查询“在草原上奔跑的马”，并可以添加颜色、品种等细节以提高检索精度。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": -1,
+        "accuracy": -1,
+        "usefulness": -1,
+        "comment": "Expecting value: line 1 column 1 (char 0)"
       }
     },
     {
@@ -592,9 +605,10 @@
       ],
       "llm_answer": "很抱歉，检索结果与您的查询“birds flying over the ocean”完全不相关。排名第一的结果描述的是狗和猫在长椅下的冲突，与海鸟、海洋、飞行等元素毫无关联，相似度评分也较低。建议您使用更具体的查询，例如“海鸥 海面 飞翔”或“海鸟 飞越 海浪”，并尝试添加“天空”、“翅膀”等特征词，以提高检索准确率。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": -1,
+        "accuracy": -1,
+        "usefulness": -1,
+        "comment": "Unterminated string starting at: line 1 column 61 (char 60)"
       }
     },
     {
@@ -634,9 +648,10 @@
       ],
       "llm_answer": "检索到的最相关结果描述了一个穿泳裤的小男孩在海滩上行走，这与查询“鱼在水族箱中游泳”毫无关联。排名第一的匹配主要依靠关键词“swimming”，它将查询中的“游泳”与结果里的“泳裤”联系了起来，但完全忽略了“鱼”和“水族箱”这两个核心概念。本次检索结果明显不佳，建议优化查询词，例如直接使用“水族箱里的鱼”、“观赏鱼在鱼缸中游动”或“fish in aquarium”等更明确的短语，以突出视觉主体和环境。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": 1,
+        "accuracy": 5,
+        "usefulness": 4,
+        "comment": "回答诚实指出检索结果完全不相关，并提供了具体查询优化建议，准确性高且有一定帮助性。"
       }
     },
     {
@@ -676,9 +691,10 @@
       ],
       "llm_answer": "检索到的结果均与“松鼠在树上吃坚果”无关，都是关于人在户外活动（如烧烤、握手、野餐）的场景，显然图文不匹配。排名第一的结果得分最高（0.700），但描述为“赤脚男子在烤热狗”，仅可能因“eating（吃）”这一动作产生微弱关联，并未体现松鼠、坚果或树等核心要素。由于检索质量不佳，建议优化查询词，使用更精确的描述，例如“一只松鼠站在树枝上捧着坚果啃食”或“tree squirrel holding a nut”，并加入“动物”限定词来排除人物场景。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": 1,
+        "accuracy": 5,
+        "usefulness": 5,
+        "comment": "回答诚实指出检索结果与查询无关，并给出了实用的查询优化建议，准确性高且有用。"
       }
     },
     {
@@ -718,9 +734,10 @@
       ],
       "llm_answer": "检索到的结果中没有任何与“两只狗一起玩耍”相关的描述，全部都是人物场景。排名第一的结果（得分0.600）描述的是女性在平衡木上做体操劈叉，这与查询中的“狗”和“玩耍”概念毫无关联，可能是因为模型错误地将动态动作与“playing”匹配。建议优化查询词，尝试更具体和直观的英文短语，例如“two puppies wrestling”或“dogs playing fetch”，以减少歧义、提高跨模态检索的准确性。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": -1,
+        "accuracy": -1,
+        "usefulness": -1,
+        "comment": "Expecting value: line 1 column 1 (char 0)"
       }
     },
     {
@@ -760,9 +777,10 @@
       ],
       "llm_answer": "根据查询“一只白猫坐在窗边”，检索结果中最相关的是一张得分0.700的图片，描述为“一位穿着白棕条纹连衣裙的女性坐在一位穿棕领衬衫的男性腿上”，但这与查询内容完全无关。排名第一的结果之所以得分较高，可能是因为系统错误地将图像中的“白色”区域（如衣服）和“坐”的姿态与查询关键词产生了表面关联，但忽略了核心对象“猫”和“窗户”。目前所有结果都不符合需求，建议优化查询词，例如使用更具体的中文短语“白色猫咪 窗台”或英文“white cat sitting on windowsill”，以提高检索精度。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": -1,
+        "accuracy": -1,
+        "usefulness": -1,
+        "comment": "Expecting value: line 1 column 29 (char 28)"
       }
     },
     {
@@ -802,9 +820,10 @@
       ],
       "llm_answer": "根据检索结果，最相关的是一张滑雪者俯瞰雪山的图片，其他结果也多为山地雪景或攀岩场景。排名第一的图片虽然包含山脉，但完全缺少“日落”这一关键视觉元素，仅匹配了“mountain landscape”部分。检索结果整体偏向雪景和登山活动，与“sunset”的黄昏氛围无关。如果您希望得到夕阳下的山景，建议尝试更具体的查询词，例如“sunset over snowy mountains”或“mountain landscape with golden sky”。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": -1,
+        "accuracy": -1,
+        "usefulness": -1,
+        "comment": "Expecting value: line 1 column 1 (char 0)"
       }
     },
     {
@@ -844,9 +863,10 @@
       ],
       "llm_answer": "根据检索结果，最相关的图文似乎是第二项“三个男孩穿着宽松泳裤在灰色围墙前玩水”，因为它包含了水元素，但缺失沙滩与棕榈树。而排名第一的结果“一个男人在铁轨上拍桥”与查询的海滩、海浪、棕榈树完全无关，之所以得分最高，可能是模型错误地关联了“蓝色衬衫”与“海浪蓝”、“铁轨”与“棕榈树干”等视觉特征。当前检索结果整体不佳，缺少直接的沙滩、海浪与棕榈树元素。建议您优化查询，使用更具体的词组如“热带海滩”“椰子树”“海岸波浪”或甚至直接使用完整场景描述，以提高检索精度。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": -1,
+        "accuracy": -1,
+        "usefulness": -1,
+        "comment": "Expecting value: line 1 column 1 (char 0)"
       }
     },
     {
@@ -886,9 +906,10 @@
       ],
       "llm_answer": "最相关的检索结果是“一个男人站在森林里练习武术”，虽然场景在森林中，但完全没有体现“秋色”或“小径”的核心元素。排名第一的原因可能仅在于“森林”这一共同背景，但相似度分数较低（0.432），说明匹配并不理想。鉴于查询要求一条具体的秋季林间小道，建议将查询优化为“秋天森林小径 落叶”或“autumn forest path with fallen leaves”，以增强对季节和路径特征的描述。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": -1,
+        "accuracy": -1,
+        "usefulness": -1,
+        "comment": "Unterminated string starting at: line 1 column 61 (char 60)"
       }
     },
     {
@@ -928,9 +949,10 @@
       ],
       "llm_answer": "检索结果中最相关的是一张有人跳入河流的照片，但整体与“河流穿过山谷”的自然景观查询匹配度不高，其他结果则完全无关。排名第一的描述虽包含河流，但重点是人跳水的动作和建筑，缺少山谷场景，因此仅因“river”一词获得较低相似度。建议优化查询词，使用更具体的景观描述如“mountain river valley landscape”或“scenic river winding through valley”，以提升检索准确性。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": -1,
+        "accuracy": -1,
+        "usefulness": -1,
+        "comment": "Expecting value: line 1 column 1 (char 0)"
       }
     },
     {
@@ -970,9 +992,10 @@
       ],
       "llm_answer": "根据您查询的“蓝天下的雪山”，检索结果的相似度得分普遍较低，且所有图文配对均与雪山场景无关，主要描述的是餐厅厨房内的人物活动。排名第一的结果之所以得分最高，可能是因为其背景中有大面积蓝色或白色元素（如蓝色制服、白色墙壁），被算法误判为与“蓝天”“白雪”形成表面关联，但语义上完全不匹配。鉴于当前检索结果极不理想，建议您将查询词改为更具体的英文短语，例如“snowy mountain peak under clear blue sky”，或直接使用中文关键词如“雪山 蓝天”重新搜索，以获得更准确的跨模态匹配。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": -1,
+        "accuracy": -1,
+        "usefulness": -1,
+        "comment": "Expecting value: line 1 column 1 (char 0)"
       }
     },
     {
@@ -1012,9 +1035,10 @@
       ],
       "llm_answer": "检索结果中未出现与“夏季向日葵田”直接相关的图文。排名第一的结果描述了一名男性在车站跳舞，可能与查询中的“field”被误匹配为“场地”有关，但整体语义相差甚远。建议优化查询，例如使用更具体的描述“sunflower field under summer sun”或“yellow sunflowers blooming in summer”来强化视觉特征，或添加排除词以避免歧义。当前检索质量不佳，更适合重新发起针对性检索。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": -1,
+        "accuracy": -1,
+        "usefulness": -1,
+        "comment": "Expecting value: line 1 column 1 (char 0)"
       }
     },
     {
@@ -1054,9 +1078,10 @@
       ],
       "llm_answer": "检索结果均不相关，全是人物场景，没有与“黎明时湖面倒映天空”匹配的图像。排名第一的图片描述为老妇人选购蔬菜，与查询毫无关联，之所以排在首位可能仅是相似度算法误匹配了某些视觉特征，比如亮度或构图。建议优化查询词，使用更具体的词组，例如“宁静的湖泊 黎明 倒影 天空”，或尝试添加“风景”、“水面”等限定词，以提高跨模态检索准确性。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": -1,
+        "accuracy": -1,
+        "usefulness": -1,
+        "comment": "Expecting value: line 1 column 1 (char 0)"
       }
     },
     {
@@ -1096,9 +1121,10 @@
       ],
       "llm_answer": "检索结果与查询严重不匹配，所有图片描述均未涉及热带雨林或瀑布。排名第一的建筑工地图片可能因为背景中水汽或动态元素被误识别为“瀑布”，但实际是推土机作业场景。建议将查询词优化为更具体的表达，例如“热带雨林中的清澈瀑布”或“丛林瀑布实景”，以提高检索准确率。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": 1,
+        "accuracy": 5,
+        "usefulness": 4,
+        "comment": "回答完全未提供热带雨林瀑布信息，但诚实地指出了检索不匹配并提供查询优化建议，因此准确性和有用性尚可。"
       }
     },
     {
@@ -1138,9 +1164,10 @@
       ],
       "llm_answer": "根据检索结果，最相关的条目并未直接展示“繁忙城市街道上行走的人群”。排名第一的是一张两人吹小号的图片，得分0.650，可能因为内容包含“人”和“街道”元素而部分匹配，但缺少“行走”和“繁忙”的关键视觉。整体来看，检索结果与查询意图偏差较大，建议优化查询词，例如改为“crowd walking on sidewalk”或“pedestrians crossing street”，并增加对动作和场景密度的描述，以提高准确性。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": -1,
+        "accuracy": -1,
+        "usefulness": -1,
+        "comment": "Expecting value: line 1 column 1 (char 0)"
       }
     },
     {
@@ -1180,9 +1207,10 @@
       ],
       "llm_answer": "根据您查询“路上一辆红色双层巴士”，最相关的检索结果描述了一个穿灰色衬衫的男人打高尔夫球，但得分仅0.700，实际内容完全不匹配。随后结果也依次涉及踢球摔倒的男孩、举人刷墙、峡谷徒步和杂乱办公室，均与巴士无关。这表明现有检索系统未能捕捉到“红色双层巴士”这一核心视觉要素，建议您可以将查询简化为“红色双层巴士”或补充场景词如“街道 红色巴士”来提升准确度。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": -1,
+        "accuracy": -1,
+        "usefulness": -1,
+        "comment": "Expecting value: line 1 column 1 (char 0)"
       }
     },
     {
@@ -1222,9 +1250,10 @@
       ],
       "llm_answer": "检索结果中没有任何与“高速公路堵车”相关的图像描述，最相关的几条分别涉及冰球比赛、儿童玩滑梯、足球摔倒等场景，完全不匹配用户查询。\n\n排名第一的结果虽然相似度得分最高（0.600），但其描述的是“两支冰球队在球门前，白队阻止蓝队进球”，主题是体育竞技而非交通拥堵，仅因模型计算出的某种语义相似性被列为第一，实际与查询无关。\n\n由于所有结果都离题，建议优化查询词以获得更准确的匹配。可以尝试使用“traffic jam on highway”“vehicles bumper to bumper on road”或“highway congestion”等更具体、与交通场景强相关的短语。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": -1,
+        "accuracy": -1,
+        "usefulness": -1,
+        "comment": "Expecting value: line 1 column 1 (char 0)"
       }
     },
     {
@@ -1264,9 +1293,10 @@
       ],
       "llm_answer": "当前检索结果与您的查询“a street market with fruit stands”匹配度较低。最相关的第二个结果描述了一位年轻男子走过繁忙街道和商场，虽然包含了“street”元素，但缺少“fruit stands”这一核心场景。排名第一的结果更是完全描述了狗在草地玩耍的画面，与水果摊无关。这主要是因为查询词中的“market”和“fruit stands”在现有图片描述中未充分体现。建议优化查询，尝试更具体的组合如“fruit stalls on a busy street”或“outdoor fruit market with vendors”，以提高检索准确性。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": 2,
+        "accuracy": 5,
+        "usefulness": 4,
+        "comment": "回答诚实指出检索结果不匹配并给出优化查询建议，准确性高；但内容与水果摊关联弱，相关性一般；分析建议具体，有一定帮助。"
       }
     },
     {
@@ -1306,9 +1336,10 @@
       ],
       "llm_answer": "检索到的最相关结果描述的是两位女性靠墙看杂志的场景，与查询的现代摩天楼完全无关。它被排在首位，很可能是因为跨模态模型将“against the sky”中的“against”错误对齐到了“against a wall”，而忽略了核心视觉对象“skyscraper”。其余结果也均未出现高楼或都市天际线。建议您优化查询词，加入更具体的视觉特征，例如“现代玻璃幕墙摩天楼映衬蓝天”，以获得更精准的图文配对。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": 5,
+        "accuracy": 5,
+        "usefulness": 4,
+        "comment": "诚实指出检索结果不匹配，分析了可能原因并提供查询优化建议，对用户有直接帮助"
       }
     },
     {
@@ -1348,9 +1379,10 @@
       ],
       "llm_answer": "检索到的图片均不匹配“城市中骑自行车的人”这一查询，结果最佳的是一个卡通角色在商店前的场景。排名第一的图片内容为白雪公主卡通立牌和戴帽女性，完全缺少“自行车”和“骑行”元素，之所以得分最高可能只是视觉特征上的偶然相似。建议优化查询，例如使用更具体的短语“bicycle riding in urban street”，或添加中文关键词“城市街道 骑自行车”，以提升检索精度。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": -1,
+        "accuracy": -1,
+        "usefulness": -1,
+        "comment": "Expecting value: line 1 column 1 (char 0)"
       }
     },
     {
@@ -1390,9 +1422,10 @@
       ],
       "llm_answer": "",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": 1,
+        "accuracy": 1,
+        "usefulness": 1,
+        "comment": "LLM未生成回答"
       }
     },
     {
@@ -1432,9 +1465,10 @@
       ],
       "llm_answer": "根据检索结果，最相关的内容描绘的是户外活动场景，但并未准确捕捉到“餐厅露台用餐”这一核心元素。排名第一的结果虽然涉及户外人群，但它描述的是“女子在户外活动中调整靴子”，与安静的餐厅露台用餐环境有很大差异，两者仅在“户外”这一宽泛概念上有微弱关联。鉴于现有结果都不理想，建议您优化查询词，比如使用“餐厅露台用餐”或“restaurant patio dining with table”，以更精确地锁定目标场景。这样能帮助检索系统更好地理解您对特定用餐氛围的需求。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": -1,
+        "accuracy": -1,
+        "usefulness": -1,
+        "comment": "Expecting value: line 1 column 1 (char 0)"
       }
     },
     {
@@ -1474,9 +1508,10 @@
       ],
       "llm_answer": "检索到的图片描述多与户外活动相关，如街头拍照、道路施工、沙丘徒步和滑板跳跃，但没有直接展示足球运动员踢球的场景。排名第一的结果之所以排在最前，可能是由于“开阔区域”和“人”等语义元素与查询中的“球员”及场地有微弱关联，但实际内容是一位男士在街边给另一位男士拍照，与踢球动作毫无关系。整体匹配度较低，建议将查询词优化为更具体的“足球运动员射门动作”或“球员在球场上踢球”，以提高检索精准度。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": -1,
+        "accuracy": -1,
+        "usefulness": -1,
+        "comment": "Unterminated string starting at: line 1 column 2 (char 1)"
       }
     },
     {
@@ -1516,9 +1551,10 @@
       ],
       "llm_answer": "检索到的最相关结果是两名拳击手在防护装备下对抗的图片，其余结果也均与篮球或扣篮无关，整体相关性很低。排名第一的结果虽然得分最高，但仅因捕捉到了运动员跳跃、伸展肢体的瞬间动作，在视觉特征上与扣篮有些许相似，而无法真正反映篮球场景。由于所有结果都不符合查询意图，强烈建议优化查询词，例如使用更明确的中文描述“篮球运动员双手灌篮”或补充“球场、篮筐”等关键词，以提升检索精度。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": -1,
+        "accuracy": -1,
+        "usefulness": -1,
+        "comment": "Unterminated string starting at: line 1 column 61 (char 60)"
       }
     },
     {
@@ -1558,9 +1594,10 @@
       ],
       "llm_answer": "根据检索结果，排名最靠前的描述是关于一个戴蓝色安全头盔的小孩站在蓝色自行车旁。这个结果与查询“a surfer riding a big wave”几乎没有关联，可能是因为系统误将“头盔”或“蓝色”等视觉元素与冲浪场景中的浪花或装备进行了低相似度匹配。整体来看，所有检索结果都围绕儿童日常活动，完全未涉及海洋、冲浪或波浪主题。如果您希望获得更精准的冲浪图片，建议优化查询词，例如使用“surfer on large ocean wave”或直接描述场景“person surfing huge wave sea”。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": 1,
+        "accuracy": 5,
+        "usefulness": 3,
+        "comment": "回答诚实指出检索结果无关，并提供了改进查询的建议，但内容本身与冲浪无关。"
       }
     },
     {
@@ -1600,9 +1637,10 @@
       ],
       "llm_answer": "检索到的结果与查询“a tennis player serving the ball”完全不相关，排名第一的图片描述的是一个男孩在玩平衡轮胎的游乐设施，没有网球、发球动作或运动员。这很可能是因为检索模型未能理解“网球运动员发球”这一明确语义，导致匹配到完全无关的场景。如果您需要改进检索结果，可以尝试使用更直白的中文关键词如“网球运动员 发球”或补充描述词“网球场”。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": -1,
+        "accuracy": -1,
+        "usefulness": -1,
+        "comment": "Expecting property name enclosed in double quotes: line 1 column 32 (char 31)"
       }
     },
     {
@@ -1642,9 +1680,10 @@
       ],
       "llm_answer": "最相关的检索结果描述的是主题公园过山车垂直加速下冲，乘客们表情各异，但这与“滑雪者下滑雪坡”的查询主题并不相符。排名第一的匹配可能是由于过山车的向下运动与滑雪下坡的动态有视觉相似性，却完全忽略了关键的“雪地”和“滑雪者”元素。检索结果整体不佳，建议优化查询词，例如使用更具体的中文短语“滑雪者 雪坡 下滑”或直接使用“滑雪”来强化场景特征。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": -1,
+        "accuracy": -1,
+        "usefulness": -1,
+        "comment": "Unterminated string starting at: line 1 column 61 (char 60)"
       }
     },
     {
@@ -1684,9 +1723,10 @@
       ],
       "llm_answer": "根据检索结果，最相关的是排名第3的图片，描述一位女性武术家在垫子上持械表演，包含“垫子”和“人”元素，但并非瑜伽。排名第1的结果（两个女孩与乐器）与查询“一个人在垫子上做瑜伽”完全不匹配，它可能因为“垫子”或“人”等表面词汇而获得高分，但忽略了动作和场景的关键差异。整体结果均未准确捕捉瑜伽这一核心动作，建议优化查询词，如使用“woman doing yoga on mat”、“yoga pose”或“person stretching on yoga mat”，以强调具体姿态和情境，提升检索效果。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": -1,
+        "accuracy": -1,
+        "usefulness": -1,
+        "comment": "Expecting value: line 1 column 1 (char 0)"
       }
     },
     {
@@ -1726,9 +1766,10 @@
       ],
       "llm_answer": "根据检索结果，与查询“有披萨和饮料的桌子”最相关的描述是排名第一的一段街景，其中并未出现餐桌、食物或饮品。这个结果之所以得分最高，可能是因为模型错误地将“色彩鲜艳的裙子”或“人行道”等视觉元素与“披萨和饮料”的色彩或场景产生了微弱关联，但整体内容与查询完全不符。既然检索结果都不理想，建议优化查询词，例如尝试更具体的描述“木桌上放着披萨饼和两杯饮料”或者使用中文查询“摆着披萨和饮料的餐桌”，以提升匹配精度。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": -1,
+        "accuracy": -1,
+        "usefulness": -1,
+        "comment": "Expecting value: line 1 column 1 (char 0)"
       }
     },
     {
@@ -1768,9 +1809,10 @@
       ],
       "llm_answer": "检索结果中，最相关的是第5项“人们在农贸市场选购新鲜农产品”，这直接对应了“市场中展示的新鲜水果”的场景。排名第一的结果是三个女孩在海滩玩耍，与查询无关，可能因为模型错误关联了“market”和“beach”这类开放场所，但完全没有水果元素。建议优化查询为更具体的表述，如“fresh fruits on display at a farmers market”，以增强准确性。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": -1,
+        "accuracy": -1,
+        "usefulness": -1,
+        "comment": "Expecting value: line 1 column 1 (char 0)"
       }
     },
     {
@@ -1810,9 +1852,10 @@
       ],
       "llm_answer": "最相关的检索结果是一场为5岁女孩举办的生日庆祝。这与查询“有蜡烛的生日蛋糕”匹配，因为生日庆祝场景通常包含插有蜡烛的蛋糕，尽管描述未直接提及蛋糕，但主题高度一致。其他结果（如公园雕像、和平标语等）均不相关。若需更精准匹配蛋糕画面，建议优化查询词为“birthday cake with lit candles on table”或“girl blowing out birthday candles”。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": -1,
+        "accuracy": -1,
+        "usefulness": -1,
+        "comment": "Expecting value: line 1 column 1 (char 0)"
       }
     },
     {
@@ -1852,9 +1895,10 @@
       ],
       "llm_answer": "最相关的检索结果是寿司店员工为晚餐高峰期做准备，但该描述并未直接出现“用筷子吃寿司”的动作。排名第一的结果之所以得分最高，是因为查询中的“sushi”与图像中的寿司餐厅场景存在语义关联，尽管缺乏“吃”和“筷子”的明确视觉元素。由于当前检索未能精准匹配用户意图，建议优化查询词，例如使用“person holding chopsticks with sushi”或“someone eating sushi roll”来强化动作描述，以提高命中率。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": -1,
+        "accuracy": -1,
+        "usefulness": -1,
+        "comment": "Expecting value: line 1 column 1 (char 0)"
       }
     },
     {
@@ -1894,9 +1938,10 @@
       ],
       "llm_answer": "根据检索结果，所有图片描述都与您的查询“一个有肉在烤的烧烤架”无关，没有返回相关的图文配对。\n\n排名第一的结果是“穿裤子和外套的男人走在陡峭狭窄的路上”，它与查询的相似度评分仅为0.5，但内容上完全不涉及烧烤或肉类，这很可能是因为预训练模型未能准确捕捉“barbecue grill”和“meat cooking”的具体视觉特征，而误将其他户外活动场景排在前面。\n\n由于现有结果完全不匹配，建议您尝试更具体、视觉特征更明确的查询词，例如“户外炭火烤架上滋香的烤肉”或直接搜索“烧烤架 特写 肉串”，并补充颜色或场景细节，以提高检索准确率。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": -1,
+        "accuracy": -1,
+        "usefulness": -1,
+        "comment": "Unterminated string starting at: line 1 column 61 (char 60)"
       }
     },
     {
@@ -1936,9 +1981,10 @@
       ],
       "llm_answer": "根据检索结果，没有找到与“一辆停在街上的红色跑车”直接相关的图文配对。排名第一的描述是关于四名男子在植树，与跑车无关，其相似度得分仅为0.650，远未达到有效匹配水平，原因可能是模型错误地将“红色”或“街道”等视觉元素误关联到人物场景。建议您优化查询，例如使用更具体的词如“红色跑车 街边 静态特写”，或尝试切换至中文查询“红色跑车停在路边”，以便更好对齐训练数据中的描述。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": -1,
+        "accuracy": -1,
+        "usefulness": -1,
+        "comment": "Expecting value: line 1 column 1 (char 0)"
       }
     },
     {
@@ -1978,9 +2024,10 @@
       ],
       "llm_answer": "根据检索结果，所有返回的描述都与“飞机在蓝天飞行”完全无关，排名最靠前的几项都是人物活动场景。排名第一的“年轻女子从长凳伸手与人握手”在语义上无任何航空或天空元素，其匹配得分（0.700）可能源于模型对“飞机”与“飞翔”等概念的误关联，但实际内容并不吻合。由于结果均不相关，建议您尝试更具体的查询，如添加“航班”、“云层”或直接用“客机”等词，或结合视觉特征描述如“白色机翼”。如果仍无法获得有效结果，可考虑更换检索模型或扩大图文库。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": -1,
+        "accuracy": -1,
+        "usefulness": -1,
+        "comment": "Expecting value: line 1 column 1 (char 0)"
       }
     },
     {
@@ -2020,9 +2067,10 @@
       ],
       "llm_answer": "根据检索结果，没有直接匹配“平静水面上的帆船”的图片。排名第一的结果描述的是两个小孩梳头，与查询完全无关，可能是由于图像中某些视觉元素（如颜色或形状）让模型误判为相似，但语义上毫无关联。第二结果涉及男孩在水中嬉戏，勉强与“水”相关，但缺乏帆船和平静的特征。建议优化查询词，例如使用“帆船 湖面 倒影”或“sailboat reflection calm lake”来强调具体场景，以获得更准确的结果。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": -1,
+        "accuracy": -1,
+        "usefulness": -1,
+        "comment": "Expecting value: line 1 column 1 (char 0)"
       }
     },
     {
@@ -2062,9 +2110,10 @@
       ],
       "llm_answer": "根据检索结果，最相关的描述都是关于火车站台上的场景，比如人们等待登车或列车经过站台，但没有直接匹配“火车穿越乡村”的画面。排名第一的结果得分最高（0.651），其描述“人群在火车站等待上车”与查询在“火车”这个主体上部分吻合，但完全缺失了“乡村”这一关键背景，因此匹配度有限。由于现有结果整体相似度偏低且全部聚焦于站台，建议您尝试更具体的查询词，例如“乡村景色的火车”或“火车穿过田野”，以帮助模型更好地捕捉野外场景。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": -1,
+        "accuracy": -1,
+        "usefulness": -1,
+        "comment": "Expecting value: line 1 column 1 (char 0)"
       }
     },
     {
@@ -2104,9 +2153,10 @@
       ],
       "llm_answer": "根据检索结果，没有找到与“摩托车骑手在蜿蜒道路上”直接相关的图片描述。排名第一的“狗坐在山坡上”可能在“蜿蜒”或“道路”的视觉元素上有微弱匹配，但核心对象完全错误。建议您优化查询词，比如使用“摩托车”、“弯道”、“山路”等更具体的关键词，或尝试中英文混合检索。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": -1,
+        "accuracy": -1,
+        "usefulness": -1,
+        "comment": "Expecting ',' delimiter: line 1 column 31 (char 30)"
       }
     }
   ],
@@ -2209,9 +2259,10 @@
       ],
       "llm_answer": "根据检索结果，这些描述的共同主题是**多人在特定场景下进行协作或活动**，涵盖铺设轨道、游乐设施游览、手工作业、医疗手术和厨房备餐。据此推断，您上传的图片很可能展示了**一群人正在某个工作或活动场景中忙碌协作**，可能是户外劳动、团队作业等。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": -1,
+        "accuracy": -1,
+        "usefulness": -1,
+        "comment": "Expecting value: line 1 column 1 (char 0)"
       }
     },
     {
@@ -2312,9 +2363,10 @@
       ],
       "llm_answer": "这些检索结果都展现了日常生活中的瞬间场景，包含人物与特定环境道具（如霓虹招牌、广告、交通工具）的互动。据此推断，用户上传的图片很可能是一张包含人物面部或半身、背景带有标识性文字或公共设施的街拍风格照片。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": -1,
+        "accuracy": -1,
+        "usefulness": -1,
+        "comment": "Expecting value: line 1 column 1 (char 0)"
       }
     },
     {
@@ -2415,9 +2467,10 @@
       ],
       "llm_answer": "根据检索结果，这些描述都聚焦于日常生活中的人物场景，如微笑的女孩、玩耍的狗、开车阅读地图的男性等，没有统一的主题。推测您上传的图片很可能是一张包含人物或动物的生活随拍，例如在窗边、户外或车内的人物特写。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": -1,
+        "accuracy": -1,
+        "usefulness": -1,
+        "comment": "Expecting value: line 1 column 1 (char 0)"
       }
     },
     {
@@ -2518,9 +2571,10 @@
       ],
       "llm_answer": "根据检索结果，共同主题多聚焦于户外人行道场景，涉及人物与宠物或儿童的互动（如女子蹲身与狗、女孩微笑，男孩在人行道上伴车），也有单纯的街头景象。由此推断，用户上传的图片很可能也展现了人行道环境中人与动物或人的自然相处瞬间，可能包含一只狗和行人活动的元素。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": -1,
+        "accuracy": -1,
+        "usefulness": -1,
+        "comment": "Expecting value: line 1 column 1 (char 0)"
       }
     },
     {
@@ -2621,9 +2675,10 @@
       ],
       "llm_answer": "检索结果大多涉及在公共场合（如地铁站、电影院外）活动的人群或人物的生活场景。据此推断，用户上传的图片很可能是一张展现人物在户外或公共环境中自然状态的照片，内容上与人群中望向镜头的人物或街头行人相关。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": -1,
+        "accuracy": -1,
+        "usefulness": -1,
+        "comment": "Expecting value: line 1 column 1 (char 0)"
       }
     },
     {
@@ -2724,9 +2779,10 @@
       ],
       "llm_answer": "这些检索结果共同展现了人与动物在不同场景中的动态活动，部分片段包含水花或人群。用户上传的图片很可能是一只戴着标签的黑狗在水中嬉戏，与排名第一的描述高度吻合。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": -1,
+        "accuracy": -1,
+        "usefulness": -1,
+        "comment": "Expecting value: line 1 column 1 (char 0)"
       }
     },
     {
@@ -2827,9 +2883,10 @@
       ],
       "llm_answer": "这些检索结果都描述了人物在特定场景中的日常活动或休闲时刻。根据最高相似度的描述，用户上传的图片很可能是一个戴着棒球帽、穿黑夹克的男子站在浴室里拿着咖啡杯。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": -1,
+        "accuracy": -1,
+        "usefulness": -1,
+        "comment": "Expecting value: line 1 column 1 (char 0)"
       }
     },
     {
@@ -2930,9 +2987,10 @@
       ],
       "llm_answer": "这些检索结果都描绘了不同年龄、场景下的人物活动，从婴儿到老人，但共同点在于捕捉了人物在特定情境中的瞬间。用户上传的图片很可能也展现了一个人物，结合最高相似度（0.691）是“穿绿黄色衣服、戴围嘴的婴儿在哭泣”，推测图片内容可能是一位正在哭泣的婴儿。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": -1,
+        "accuracy": -1,
+        "usefulness": -1,
+        "comment": "Expecting value: line 1 column 1 (char 0)"
       }
     },
     {
@@ -3033,9 +3091,10 @@
       ],
       "llm_answer": "根据检索结果，图片可能展示了一个户外场景中的人物活动，其中第一项最相似，描述为一名穿蓝衬衫的男孩正仔细端详一个带有向上黄色触手的物体。综合来看，您上传的图片很可能是一个小男孩在自然环境中好奇地观察某个奇特发现。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": -1,
+        "accuracy": -1,
+        "usefulness": -1,
+        "comment": "Expecting value: line 1 column 1 (char 0)"
       }
     },
     {
@@ -3136,9 +3195,10 @@
       ],
       "llm_answer": "这些检索结果大多涉及两个人或多人共同参与某项活动的场景，但最相关的第一个结果明确指向“两人一起吹小号”。据此推断，您上传的图片很可能就是两个人在演奏小号等铜管乐器。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": -1,
+        "accuracy": -1,
+        "usefulness": -1,
+        "comment": "Expecting value: line 1 column 1 (char 0)"
       }
     },
     {
@@ -3239,9 +3299,10 @@
       ],
       "llm_answer": "根据检索结果，这些描述大多围绕户外公共空间中的群体活动展开，涉及聚会、游行、工作或休闲场景。结合相似度最高的描述（年轻人在户外聚餐饮品），推测用户上传的图片很可能展现了一群人正在户外轻松社交或参加某种小型聚会的画面。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": -1,
+        "accuracy": -1,
+        "usefulness": -1,
+        "comment": "Expecting value: line 1 column 1 (char 0)"
       }
     },
     {
@@ -3342,9 +3403,10 @@
       ],
       "llm_answer": "这些检索结果都描绘了人们在日常生活中参与各种休闲活动的场景，比如阅读杂志、打台球、使用滑板车、与宠物玩耍或操作音响设备。由此推断，您上传的图片很可能也包含人物正在进行某种轻松、日常的消遣或社交活动。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": -1,
+        "accuracy": -1,
+        "usefulness": -1,
+        "comment": "Expecting value: line 1 column 1 (char 0)"
       }
     },
     {
@@ -3445,9 +3507,10 @@
       ],
       "llm_answer": "根据检索结果，这些图文配对的共同主题是“人物在特定生活或公共场景中的瞬间状态”。由此推断，用户上传的图片可能是一张包含单人或多人、呈现某种日常情境或动作的抓拍照片。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": -1,
+        "accuracy": -1,
+        "usefulness": -1,
+        "comment": "Expecting value: line 1 column 1 (char 0)"
       }
     },
     {
@@ -3548,9 +3611,10 @@
       ],
       "llm_answer": "根据检索结果，这些图文描述的共同主题是“包含人物的日常生活或特定场景”。推断用户上传的图片很可能展现了一群人正在登上或围绕一列前部涂有黄色的火车，因为该描述相似度最高，且与其他杂乱场景相比更聚焦。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": -1,
+        "accuracy": -1,
+        "usefulness": -1,
+        "comment": "Expecting value: line 1 column 1 (char 0)"
       }
     },
     {
@@ -3651,9 +3715,10 @@
       ],
       "llm_answer": "这些检索结果都涉及户外场景中的人物活动，包括就座、站立或进行休闲表演，且多数画面中有多人互动。由此推断，用户上传的图片很可能显示一个穿着蓝衬衫的人坐在木长椅后面，其前方另有两人就座，构成类似公共场合的日常场景。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": -1,
+        "accuracy": -1,
+        "usefulness": -1,
+        "comment": "Expecting value: line 1 column 1 (char 0)"
       }
     },
     {
@@ -3754,9 +3819,10 @@
       ],
       "llm_answer": "根据检索结果，这些图文主要围绕人物与自然或工业场景的互动，尤其突出岩壁、冰壁等户外攀爬或站立场景。可以推断，用户上传的图片很可能展现了一个人物（可能是男孩或攀爬者）身处岩石或冰壁环境中，动作或姿态与攀登、站立相关。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": -1,
+        "accuracy": -1,
+        "usefulness": -1,
+        "comment": "Expecting value: line 1 column 1 (char 0)"
       }
     },
     {
@@ -3857,9 +3923,10 @@
       ],
       "llm_answer": "这些检索结果都展现了人物处于放松、微笑的状态，且多数场景涉及坐着或有着某种日常物品相伴的氛围。由此推断，您上传的图片很可能也包含一位面带笑容的人物，正坐在某个环境中，或许身边也有物品或同伴。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": -1,
+        "accuracy": -1,
+        "usefulness": -1,
+        "comment": "Expecting value: line 1 column 1 (char 0)"
       }
     },
     {
@@ -3960,9 +4027,10 @@
       ],
       "llm_answer": "检索结果大多描绘了户外场景下的人际互动与日常片段，主题围绕人们在自然或城市环境中行走、玩耍或互助。由此推断，用户上传的图片很可能也呈现了类似的户外叙事，尤其可能是一个成年男子帮助女孩下车、周围有其他家人或路人观看的温馨瞬间。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": -1,
+        "accuracy": -1,
+        "usefulness": -1,
+        "comment": "Expecting value: line 1 column 1 (char 0)"
       }
     },
     {
@@ -4063,9 +4131,10 @@
       ],
       "llm_answer": "根据检索结果，这些描述都涉及人物在户外场景中的活动，且多数聚焦于儿童或年轻人。由此推断，用户上传的图片很可能是一张展示小女孩（可能穿着红色衣物）在自然环境中（如岩石、草地或水边）放松或玩耍的照片。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": -1,
+        "accuracy": -1,
+        "usefulness": -1,
+        "comment": "Expecting value: line 1 column 1 (char 0)"
       }
     },
     {
@@ -4166,9 +4235,10 @@
       ],
       "llm_answer": "根据检索结果，最相似的描述共同围绕“户外活动中的互动或动态场景”，涉及人物行走、帮助、运动等非静态画面。您上传的图片很可能呈现一个在车辆旁或街道环境中，人物间有协助或观望行为的日常瞬间，与第一条描述“男子帮助女孩从彩绘卡车下车”最为贴近。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": -1,
+        "accuracy": -1,
+        "usefulness": -1,
+        "comment": "Expecting value: line 1 column 1 (char 0)"
       }
     },
     {
@@ -4269,9 +4339,10 @@
       ],
       "llm_answer": "根据检索结果，共同主题是人与动物在水上或水边的户外活动场景，涵盖划船、皮划艇、涉水和站立筏等。据此推断，用户上传的图片很可能展示了一个人在进行水上活动（如划船或戏水），背景为自然水域的视角。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": -1,
+        "accuracy": -1,
+        "usefulness": -1,
+        "comment": "Expecting value: line 1 column 1 (char 0)"
       }
     },
     {
@@ -4372,9 +4443,10 @@
       ],
       "llm_answer": "这些检索结果都展示了日常生活中人或动物的各种活动场景，没有明显的统一主题。根据排名最高的结果推断，您上传的图片很可能是一只黑白相间的狗在草地上叼着一根长棍子。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": -1,
+        "accuracy": -1,
+        "usefulness": -1,
+        "comment": "Expecting value: line 1 column 1 (char 0)"
       }
     },
     {
@@ -4475,9 +4547,10 @@
       ],
       "llm_answer": "根据检索结果，这些描述的共同主题多围绕人物与反射、独自活动或孩童的日常瞬间，尤其突出“观看倒影”或“自我映照”的场景。由此推断，您上传的图片很可能是一个小孩（或人物）正凝视自己在光滑表面（如墙面、水面）中的倒影，画面带有静谧或好奇的氛围。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": -1,
+        "accuracy": -1,
+        "usefulness": -1,
+        "comment": "Expecting value: line 1 column 1 (char 0)"
       }
     },
     {
@@ -4578,9 +4651,10 @@
       ],
       "llm_answer": "这些检索结果都涉及人群在公共场合的场景，共同主题是“公共场所中的人群活动”。根据描述，特别是第一个结果提到“两个人直视拍照者”，用户上传的图片很可能是一张在类似体育馆或活动现场拍摄的照片，画面中有大量观众，且前景有人直接看向镜头。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": -1,
+        "accuracy": -1,
+        "usefulness": -1,
+        "comment": "Expecting value: line 1 column 1 (char 0)"
       }
     },
     {
@@ -4681,9 +4755,10 @@
       ],
       "llm_answer": "这些检索结果大多捕捉了日常生活中的休闲或社交互动瞬间，人物表情自然，场景轻松，没有明显的摆拍痕迹。据此推断，用户上传的图片很可能也记录了某个真实的生活片段，或许是几个人在户外或公共场合进行某种轻松的活动或交流。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": -1,
+        "accuracy": -1,
+        "usefulness": -1,
+        "comment": "Expecting value: line 1 column 1 (char 0)"
       }
     },
     {
@@ -4784,9 +4859,10 @@
       ],
       "llm_answer": "检索结果呈现出多样的场景，但共同点都是描绘人物在特定环境中的活动，且大多涉及专注观看或展示某物。根据最高相似度（0.754）的描述，您上传的图片很可能是一个男人坐在电脑显示器前，手持键盘并直视镜头。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": -1,
+        "accuracy": -1,
+        "usefulness": -1,
+        "comment": "Expecting value: line 1 column 1 (char 0)"
       }
     },
     {
@@ -4887,9 +4963,10 @@
       ],
       "llm_answer": "这些检索结果都捕捉了人们在户外场景中互动或运动的瞬间，无论是双人配合、群体聚集还是个人表演。由此推断，用户上传的图片很可能也呈现了一个相似的动态场景，例如两人在运动中击掌或一群人在户外等待。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": -1,
+        "accuracy": -1,
+        "usefulness": -1,
+        "comment": "Expecting value: line 1 column 1 (char 0)"
       }
     },
     {
@@ -4990,9 +5067,10 @@
       ],
       "llm_answer": "根据检索结果，这些图片都围绕“儿童或青少年在水边活动”这一主题，包括在泳池、海边嬉戏或钓鱼等场景。由此推断，用户上传的图片很可能也展示了孩子们在游泳池或自然水域玩耍的画面。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": -1,
+        "accuracy": -1,
+        "usefulness": -1,
+        "comment": "Expecting value: line 1 column 1 (char 0)"
       }
     },
     {
@@ -5093,9 +5171,10 @@
       ],
       "llm_answer": "检索到的结果都展现了两个人共同参与某种活动或置身同一场景的画面。据此推测，您上传的图片很可能也包含两人互动的元素，比如结伴出行、共同工作或分享同一份物品。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": -1,
+        "accuracy": -1,
+        "usefulness": -1,
+        "comment": "Expecting value: line 1 column 1 (char 0)"
       }
     },
     {
@@ -5196,9 +5275,10 @@
       ],
       "llm_answer": "这些检索结果共同展现了人们在户外进行各类活动的场景，包括休闲、玩耍、执法和拍照。根据相似度最高的描述，您上传的图片很可能也包含穿着相似的孩子在户外参与游行或类似活动。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": -1,
+        "accuracy": -1,
+        "usefulness": -1,
+        "comment": "Expecting value: line 1 column 1 (char 0)"
       }
     },
     {
@@ -5299,9 +5379,10 @@
       ],
       "llm_answer": "这些检索结果都围绕着人物在日常或活动场景中的瞬间，包括休闲、表演、专注动作和儿童玩耍等，呈现出一种生活化的纪实风格。据此推断，您上传的图片很可能也是类似的人物生活场景，比如一个人带着宠物、进行某项活动或某个具有动作感的温馨瞬间。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": -1,
+        "accuracy": -1,
+        "usefulness": -1,
+        "comment": "Expecting value: line 1 column 1 (char 0)"
       }
     },
     {
@@ -5402,9 +5483,10 @@
       ],
       "llm_answer": "根据检索结果，这些图文配对均包含多个人物的场景，且多为日常或工作环境中的互动。用户上传的图片很可能也描绘了几个人在特定场所（如室内或户外）共同进行的活动，但具体内容因检索结果各异而难以精确推断，可能与炊事、装卸或休闲聚会有关。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": -1,
+        "accuracy": -1,
+        "usefulness": -1,
+        "comment": "Expecting value: line 1 column 1 (char 0)"
       }
     },
     {
@@ -5505,9 +5587,10 @@
       ],
       "llm_answer": "检索结果展示了人们在多种场景下的活动，如滑冰、办公、遛猪、体操和街边摆摊，但最相似的结果直接指向“两个女孩手拉手在冰上滑冰”。因此，用户上传的图片很可能是一对女孩在冰面上携手滑冰的场景。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": -1,
+        "accuracy": -1,
+        "usefulness": -1,
+        "comment": "Expecting value: line 1 column 1 (char 0)"
       }
     },
     {
@@ -5608,9 +5691,10 @@
       ],
       "llm_answer": "根据检索结果，这些图片的共同主题是户外场景中人们的自然活动状态，尤其是孩童的快乐瞬间。用户上传的图片很可能也展现了一个小女孩在草地上奔跑嬉笑的画面，且她的着装或背景元素与第一名描述高度吻合。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": -1,
+        "accuracy": -1,
+        "usefulness": -1,
+        "comment": "Expecting value: line 1 column 1 (char 0)"
       }
     },
     {
@@ -5711,9 +5795,10 @@
       ],
       "llm_answer": "检索结果均围绕人物主体在特定情境下的动作或情绪表达，且多为单人（或少数人）的近距离抓拍。据此推断，用户上传的图片很可能也是一张人物处于某种互动或情绪状态中的画面，例如某人抱着一个较大的玩具或物品。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": -1,
+        "accuracy": -1,
+        "usefulness": -1,
+        "comment": "Expecting value: line 1 column 1 (char 0)"
       }
     },
     {
@@ -5814,9 +5899,10 @@
       ],
       "llm_answer": "根据检索结果，多张描述涉及人群聚集或人物互动场景，如火车站候车、车内休憩、餐桌共餐等，共同主题是人类日常生活中的公共或私人社交与等待时刻。因此，用户上传的图片很可能展现了一群人在公共场所（如车站、餐厅等）聚集、等待或共同活动的画面。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": -1,
+        "accuracy": -1,
+        "usefulness": -1,
+        "comment": "Expecting value: line 1 column 1 (char 0)"
       }
     },
     {
@@ -5917,9 +6003,10 @@
       ],
       "llm_answer": "这些检索结果都描述了人们在户外或室内场景中进行各类活动，如骑行、演奏、劳作或玩耍。根据相似度最高的描述，您上传的图片可能是一群带自行车的人，其中有一人正在指向某个方向。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": -1,
+        "accuracy": -1,
+        "usefulness": -1,
+        "comment": "Expecting value: line 1 column 1 (char 0)"
       }
     },
     {
@@ -6020,9 +6107,10 @@
       ],
       "llm_answer": "检索结果大多为户外场景中的人物活动，其中排名最高的描述显示为身着白色裙子的女性在人群前旋转起舞。由此推测，您上传的图片很可能也包含穿白衣的女性人物，且在公共场合进行舞蹈或表演性动作。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": -1,
+        "accuracy": -1,
+        "usefulness": -1,
+        "comment": "Expecting value: line 1 column 1 (char 0)"
       }
     },
     {
@@ -6123,9 +6211,10 @@
       ],
       "llm_answer": "这些检索结果都描述了不同场景下的人物，共同主题是户外环境中的日常活动。根据最相似的描述推断，您上传的图片很可能也是一位穿着橙色背心、戴黄色安全帽的建筑工人。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": -1,
+        "accuracy": -1,
+        "usefulness": -1,
+        "comment": "Expecting value: line 1 column 1 (char 0)"
       }
     },
     {
@@ -6226,9 +6315,10 @@
       ],
       "llm_answer": "这些检索结果都是关于不同场景下的人物活动，包括儿童玩耍、市场交易、沐浴、合影和街头瞬间，共同展现了日常生活中的多元人物互动。据此推断，用户上传的图片很可能也包含人物，可能是一个人在特定环境或活动中的生活场景。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": -1,
+        "accuracy": -1,
+        "usefulness": -1,
+        "comment": "Expecting value: line 1 column 1 (char 0)"
       }
     },
     {
@@ -6329,9 +6419,10 @@
       ],
       "llm_answer": "根据检索结果，这些描述主要围绕人物正在进行某种活动，例如表演、工作、绘画、学习或垂钓，且多数场景涉及户外或特定背景。共同模式是聚焦于“人与行为的互动”。由此推断，用户上传的图片很可能也包含人物在特定场景中从事某项活动，最相似的是一位女性在花园背景下与玩偶互动的表演场景。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": -1,
+        "accuracy": -1,
+        "usefulness": -1,
+        "comment": "Expecting value: line 1 column 1 (char 0)"
       }
     },
     {
@@ -6432,9 +6523,10 @@
       ],
       "llm_answer": "根据检索到的描述，这些结果大多涉及户外场景中的人群或小组活动，但最高相似度的描述明确指向“听音乐会的人群”。因此，推测用户上传的图片很可能展示了一群人正在欣赏一场独奏音乐会。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": -1,
+        "accuracy": -1,
+        "usefulness": -1,
+        "comment": "Expecting value: line 1 column 1 (char 0)"
       }
     },
     {
@@ -6535,9 +6627,10 @@
       ],
       "llm_answer": "检索结果主要围绕人物在特定场景下的动作，如做蛋糕、读报、滑雪等，共同模式是捕捉了不同人群的日常生活或休闲瞬间。据此推断，用户上传的图片很可能也包含人物主体，并聚焦于某种清晰的活动或互动场景。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": -1,
+        "accuracy": -1,
+        "usefulness": -1,
+        "comment": "Expecting value: line 1 column 1 (char 0)"
       }
     },
     {
@@ -6638,9 +6731,10 @@
       ],
       "llm_answer": "这些检索结果都围绕“户外场景中的人物活动”展开，包括儿童嬉戏、成人休闲聚会等。据此推断，用户上传的图片很可能是一张孩子们在草地或公园里玩耍的生活照。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": -1,
+        "accuracy": -1,
+        "usefulness": -1,
+        "comment": "Expecting value: line 1 column 1 (char 0)"
       }
     },
     {
@@ -6741,9 +6835,10 @@
       ],
       "llm_answer": "这些检索结果都聚焦于人物在户外玩耍的场景，尤其突出休闲与童趣的瞬间。用户上传的图片很可能也包含类似元素，比如一个孩子或成年人在轻松、自然的环境中活动。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": -1,
+        "accuracy": -1,
+        "usefulness": -1,
+        "comment": "Expecting value: line 1 column 1 (char 0)"
       }
     },
     {
@@ -6844,9 +6939,10 @@
       ],
       "llm_answer": "这些检索结果的主题是年轻人在户外参与各类活动，如表演、骑行或聚会。据此推断，用户上传的图片可能展示了一位年轻人在户外场景中展示或操作某个小物件，类似社交或演示场合。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": -1,
+        "accuracy": -1,
+        "usefulness": -1,
+        "comment": "Expecting value: line 1 column 1 (char 0)"
       }
     },
     {
@@ -6947,9 +7043,10 @@
       ],
       "llm_answer": "检索结果主要围绕人物互动和日常场景，其中最高相似度的描述都涉及人物动作（如孩童伸手、女孩行走），可能暗示用户上传的图片聚焦于人物姿态或瞬间动态。据此推断，上传图片很可能展现了一个孩童伸手向上的动作，旁边还有其他人陪伴，属于生活抓拍或家庭场景。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": -1,
+        "accuracy": -1,
+        "usefulness": -1,
+        "comment": "Expecting value: line 1 column 1 (char 0)"
       }
     },
     {
@@ -7050,9 +7147,10 @@
       ],
       "llm_answer": "检索到的图片主要呈现年轻人在户外活动、表演或展示有趣动作的场景，其中反复出现运动、奇特姿态和群体互动等元素。据此推断，用户上传的图片可能也涉及一个年轻人在某种生动或略带搞怪的户外情境中。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": -1,
+        "accuracy": -1,
+        "usefulness": -1,
+        "comment": "Expecting value: line 1 column 1 (char 0)"
       }
     },
     {
@@ -7153,9 +7251,10 @@
       ],
       "llm_answer": "根据检索结果，这些描述都围绕人物在日常场景中的自然姿态，其中最高相似度的图片明确指向“女孩在海水浪花中玩耍”。因此，可以推断您上传的图片很可能是一位年轻女孩在海边戏水的画面。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": -1,
+        "accuracy": -1,
+        "usefulness": -1,
+        "comment": "Expecting value: line 1 column 1 (char 0)"
       }
     },
     {
@@ -7256,9 +7355,10 @@
       ],
       "llm_answer": "检索结果的共同主题是人们在户外进行休闲活动，如徒步、散步、跳跃和野餐。结合描述，推断用户上传的图片很可能展现一个人在自然或户外环境中，可能是男性在长椅上打电话的场景，因为这与最高相似度匹配相符。",
       "human_scores": {
-        "relevance": null,
-        "accuracy": null,
-        "usefulness": null
+        "relevance": -1,
+        "accuracy": -1,
+        "usefulness": -1,
+        "comment": "Expecting value: line 1 column 1 (char 0)"
       }
     }
   ],
@@ -7276,5 +7376,59 @@
       "note": "使用训练集图片(2/50自匹配)。非自匹配均值0.7387说明能检索到不同程度相似的图片。建议用外部图片做真实测试。"
     },
     "summary": "自动指标仅反映LLM响应情况和检索余弦值。LLM生成质量(相关性/准确性/有用性)仍需人工评分。"
+  },
+  "llm_judge_evaluation": {
+    "method": "LLM-as-Judge (automated scoring via LLM)",
+    "model_used": "deepseek-v4-pro",
+    "scoring_prompt": "你是一个RAG系统评估专家。请对以下检索增强生成的结果进行评分。\n\n【用户查询】{query}\n\n【检索到的Top-3结果】\n{context}\n\n【系统生成的回答】\n{answer}\n\n请从以下三个维度打分（1=最差, 5=最好）：\n1. **相关性**：回答是否与用户查询相关？无关内容扣分。\n2. **准确性**：回答是否基于检索结果如实陈述？胡编乱造扣分。如果检索结果不好但系统诚实说明了，给高分。\n3. **有用性**：回答对用户是否有帮助？是否提供了有价值的分析或建议？\n\n重要规则：\n- 如果检索结果明显不匹配查询，而系统诚实地说\"没有找到匹配\"，准确性应给4-5分\n- 如果检索结果不...",
+    "text_to_image_stats": {
+      "name": "text_to_image",
+      "count": 11,
+      "failed": 39,
+      "relevance_mean": 2.73,
+      "accuracy_mean": 4.64,
+      "usefulness_mean": 4.0,
+      "overall_mean": 3.79,
+      "score_distribution": {
+        "relevance": {
+          "1": 5,
+          "2": 1,
+          "3": 0,
+          "4": 2,
+          "5": 3
+        },
+        "accuracy": {
+          "1": 1,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 10
+        },
+        "usefulness": {
+          "1": 1,
+          "2": 0,
+          "3": 1,
+          "4": 5,
+          "5": 4
+        }
+      }
+    },
+    "image_to_text_stats": {},
+    "note": "使用LLM自动评分作为人工评分的替代方案。这是RAG研究中的标准做法(MT-Bench, LLM-as-Judge)。建议人工抽查10-15条验证评分合理性。"
+  },
+  "auto_evaluation": {
+    "method": "基于规则的自动评估 (Rule-based heuristic)",
+    "note": "不依赖LLM打分，使用诚实关键词+建议关键词+余弦相似度做粗略评估",
+    "text_to_image_stats": {
+      "samples": 50,
+      "honesty_rate": "43/50 (86%)",
+      "suggestion_rate": "49/50 (98%)",
+      "avg_top1_cosine": 0.609
+    },
+    "scoring_rubric": {
+      "accuracy": "回答诚实说明检索不佳→4-5分; 编造匹配→2分; 无回答→1分",
+      "relevance": "基于top-1余弦值: >0.8→4-5分, 0.5-0.8→2-3分, <0.5→1-2分",
+      "usefulness": "有优化建议→4-5分; 诚实但无建议→3分; 编造→1-2分"
+    }
   }
 }
